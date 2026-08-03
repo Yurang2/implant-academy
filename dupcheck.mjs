@@ -55,7 +55,7 @@ let failed = 0;
   track.units.forEach((u, ui) => u.lessons.forEach((l, li) => l.questions.forEach((q, qi) => {
     all.push({
       tag: `U${ui + 1}(${u.title}) L${li + 1} Q${qi + 1}`,
-      unit: ui,
+      unit: ui, li,
       prompt: promptText(q),
       type: q.type,
       ans: answerText(q),
@@ -66,9 +66,11 @@ let failed = 0;
   const hits = [];
   for (let i = 0; i < all.length; i++) {
     for (let j = i + 1; j < all.length; j++) {
-      // 같은 문장을 듣고(listen) 따라 말하는(speak) 것은 의도된 반복이므로 제외
+      // 같은 레슨 안에서 같은 문장을 듣고(listen) 조립하고(wordbank) 말하는(speak) 것은
+      // 의도된 반복 학습이므로 제외한다. 레슨을 넘어가는 반복은 정상적으로 비교한다.
+      const sameLesson = all[i].unit === all[j].unit && all[i].li === all[j].li;
       const pairTypes = [all[i].type, all[j].type].sort().join('+');
-      if (pairTypes === 'listen+speak' || pairTypes === 'listen+wordbank' || pairTypes === 'speak+wordbank') continue;
+      if (sameLesson && (pairTypes === 'listen+speak' || pairTypes === 'listen+wordbank' || pairTypes === 'speak+wordbank')) continue;
       const s = jaccard(all[i].tok, all[j].tok);
       if (s >= MED) hits.push({ s, a: all[i], b: all[j] });
     }

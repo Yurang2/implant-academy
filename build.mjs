@@ -11,7 +11,12 @@ const fragPath = path.join(dir, 'app.html');
 let frag = fs.readFileSync(fragPath, 'utf8');
 
 const dataArg = process.argv[2] || path.join(dir, 'data.json');
-if (fs.existsSync(dataArg)) {
+if (!fs.existsSync(dataArg)) {
+  // 조용히 건너뛰면 낡은 데이터가 그대로 배포된다 — 명시적으로 실패시킨다
+  console.error('데이터 파일이 없습니다: ' + dataArg);
+  process.exit(1);
+}
+{
   const data = loadData(dataArg);
   const { errors, warns, stats } = validate(data);
 
@@ -27,7 +32,8 @@ if (fs.existsSync(dataArg)) {
     process.exit(1);
   }
   // 같은 데이터로 다시 빌드하면 결과가 동일하다 — 정상이다.
-  frag = frag.replace(MARKERS, `/* DATA_START */\nconst DATA = ${JSON.stringify(data)};\n/* DATA_END */`);
+  // 함수 치환: 문자열 치환은 데이터 속 $& 같은 패턴을 특수 해석해 파일을 망가뜨릴 수 있다.
+  frag = frag.replace(MARKERS, () => `/* DATA_START */\nconst DATA = ${JSON.stringify(data)};\n/* DATA_END */`);
   fs.writeFileSync(fragPath, frag);
   console.log(`데이터 주입 완료: 트랙 ${stats.tracks}개 / 유닛 ${stats.units}개 / 레슨 ${stats.lessons}개 / 문항 ${stats.questions}개`);
 }
