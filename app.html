@@ -1031,7 +1031,7 @@ function nextQuestion(){
           + '<button class="audio-btn" id="btn-audio" aria-label="문장 듣기">'+IC.speaker.replace('class="icon"','')+'</button>'
           + '<button class="audio-slow" id="btn-audio-slow">'+IC.turtle+' 천천히</button>'
           + '</div>' : '')
-      + '<div class="opts">' + q.options.map((o,i)=>'<button class="opt" data-i="'+i+'">'+esc(o)+'</button>').join('') + '</div>';
+      + '<div class="opts">' + shuffle(q.options.map((o,i)=>i)).map(i=>'<button class="opt" data-i="'+i+'">'+esc(q.options[i])+'</button>').join('') + '</div>';
     if(TTS){
       const ab = $('#btn-audio');
       const playAudio = (slow) => {
@@ -1139,7 +1139,7 @@ function nextQuestion(){
   }
   else if(q.type === 'choice'){
     wrap.innerHTML = kind + '<h2 class="q-prompt">'+esc(q.prompt)+'</h2>'
-      + '<div class="opts">' + q.options.map((o,i)=>'<button class="opt" data-i="'+i+'">'+esc(o)+'</button>').join('') + '</div>';
+      + '<div class="opts">' + shuffle(q.options.map((o,i)=>i)).map(i=>'<button class="opt" data-i="'+i+'">'+esc(q.options[i])+'</button>').join('') + '</div>';
     wrap.querySelectorAll('.opt').forEach(b => b.addEventListener('click', ()=>{
       if(S.locked) return;
       wrap.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel'));
@@ -1163,7 +1163,7 @@ function nextQuestion(){
     const pHtml = esc(parts[0]) + '<span class="blank-slot" id="blank-slot">&nbsp;</span>' + esc(parts.slice(1).join('___'));
     wrap.innerHTML = kind + '<h2 class="q-prompt">'+pHtml+'</h2>'
       + (q.hint ? '<p class="q-hint">'+esc(q.hint)+'</p>' : '')
-      + '<div class="chips">' + q.options.map((o,i)=>'<button class="chip" data-i="'+i+'">'+esc(o)+'</button>').join('') + '</div>';
+      + '<div class="chips">' + shuffle(q.options.map((o,i)=>i)).map(i=>'<button class="chip" data-i="'+i+'">'+esc(q.options[i])+'</button>').join('') + '</div>';
     wrap.querySelectorAll('.chip').forEach(b => b.addEventListener('click', ()=>{
       if(S.locked) return;
       wrap.querySelectorAll('.chip').forEach(x=>x.classList.remove('sel'));
@@ -1175,7 +1175,7 @@ function nextQuestion(){
   }
   else if(q.type === 'order'){
     let bank = shuffle(q.sequence);
-    if(bank.join('|') === q.sequence.join('|') && q.sequence.length > 1) bank = shuffle(q.sequence);
+    for(let t = 0; t < 8 && bank.join('|') === q.sequence.join('|') && q.sequence.length > 1; t++) bank = shuffle(q.sequence);
     wrap.innerHTML = kind + '<h2 class="q-prompt">'+esc(q.prompt)+'</h2>'
       + '<p class="order-hint">아래 카드를 순서대로 눌러 배치하세요. 배치한 카드를 누르면 취소됩니다.</p>'
       + '<div class="order-area" id="order-area"></div>'
