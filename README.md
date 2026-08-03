@@ -62,7 +62,7 @@ node build.mjs      # 주입 + index.html 생성
 | 유형 | 하는 일 | 필수 필드 |
 |---|---|---|
 | `listen` | TTS로 문장을 들려주고 보기에서 고르기 (천천히 듣기 지원) | `audio`, `options`(4), `answerIndex` |
-| `speak` | 문장을 따라 말하면 음성 인식으로 단어별 채점 | `text`, `meaning` |
+| `speak` | 문장을 따라 말하면 음성 인식으로 단어별 채점 — **선택 유형** (신규 유닛은 저작하지 않음) | `text`, `meaning` |
 | `wordbank` | 단어 타일을 눌러 영어 문장 조립 | `prompt`, `answer`, `extra`(오답 타일), `accept`(대체 정답, 선택) |
 | `choice` | 4지선다 | `prompt`, `options`(4), `answerIndex` |
 | `blank` | 빈칸 채우기 (`___` 자리에 타일) | `prompt`, `hint`, `options`(4), `answerIndex` |
@@ -86,6 +86,8 @@ node build.mjs      # 주입 + index.html 생성
 
 ## 게임 요소
 
+- **오답 노트** — 틀린 문항이 자동으로 모이고, 홈에서 약한 문제만 다시 풉니다. 첫 시도에 맞히면 노트에서 지워집니다
+- **클라우드 동기화(선택)** — 서버 주소·코드를 넣으면 기록이 자동 저장되고 기기 간 이어집니다 ([DEPLOY.md](DEPLOY.md) 참고)
 - 레슨 시작 시 **'오늘의 표현'** 카드 — 조립·말하기할 문장을 먼저 보여 주고 들려줍니다
 - 레슨당 하트 5개 (오답 시 차감, 소진 시 재도전)
 - 오답 문항은 레슨 끝에 재출제 (맞힐 때까지)

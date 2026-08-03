@@ -22,7 +22,9 @@ const TYPES = ['choice', 'ox', 'blank', 'match', 'order', 'listen', 'wordbank', 
 
 // 레슨 템플릿: 입력 → 인식·판단 → 문형 → 조립 → 산출 → 담화 (DESIGN.md §2)
 const STAGE = { listen: 0, match: 1, choice: 2, ox: 3, blank: 4, wordbank: 5, speak: 6, order: 7 };
-const CORE = ['listen', 'wordbank', 'speak'];   // 레슨마다 정확히 1개씩
+// 레슨마다 정확히 1개씩. speak는 선택 유형 — 음성 인식 의존을 늘리지 않는 정책에 따라
+// 신규 콘텐츠는 speak 없이 저작한다 (기존 문항은 유지). DESIGN.md §2 참고.
+const CORE = ['listen', 'wordbank'];
 const LESSON_SIZE = 6;
 
 // 유닛별 문장 길이 상한 (단어 수) — listen.audio / speak.text 에 적용 (DESIGN.md §3)

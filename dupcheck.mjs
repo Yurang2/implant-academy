@@ -66,11 +66,9 @@ let failed = 0;
   const hits = [];
   for (let i = 0; i < all.length; i++) {
     for (let j = i + 1; j < all.length; j++) {
-      // 같은 레슨 안에서 같은 문장을 듣고(listen) 조립하고(wordbank) 말하는(speak) 것은
-      // 의도된 반복 학습이므로 제외한다. 레슨을 넘어가는 반복은 정상적으로 비교한다.
-      const sameLesson = all[i].unit === all[j].unit && all[i].li === all[j].li;
-      const pairTypes = [all[i].type, all[j].type].sort().join('+');
-      if (sameLesson && (pairTypes === 'listen+speak' || pairTypes === 'listen+wordbank' || pairTypes === 'speak+wordbank')) continue;
+      // 같은 레슨 안의 반복은 템플릿이 의도한 스캐폴딩이다 — 인식 문항이 wordbank/speak가
+      // 산출할 목표 문장을 먼저 노출하는 구조(DESIGN.md §2). 레슨을 넘는 반복만 비교한다.
+      if (all[i].unit === all[j].unit && all[i].li === all[j].li) continue;
       const s = jaccard(all[i].tok, all[j].tok);
       if (s >= MED) hits.push({ s, a: all[i], b: all[j] });
     }

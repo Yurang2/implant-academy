@@ -1458,6 +1458,1668 @@
               ]
             }
           ]
+        },
+        {
+          "title": "쇼핑",
+          "tagline": "구경부터 교환까지, 가게에서 쓰는 말",
+          "lessons": [
+            {
+              "title": "옷 구경하기",
+              "questions": [
+                {
+                  "type": "listen",
+                  "audio": "I'm just looking around, thank you.",
+                  "options": [
+                    "I'm just looking around, thank you.",
+                    "I'm just walking around, thank you.",
+                    "I was just looking around, thank you.",
+                    "I'm just looking around the store."
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "looking과 walking은 첫소리만 다릅니다. l은 혀끝을 윗잇몸에 대고 내고, w는 입술을 둥글게 내밀어 냅니다. 문장 끝 thank you까지 확인하세요."
+                },
+                {
+                  "type": "match",
+                  "pairs": [
+                    [
+                      "clothes",
+                      "옷"
+                    ],
+                    [
+                      "jacket",
+                      "재킷"
+                    ],
+                    [
+                      "color",
+                      "색깔"
+                    ],
+                    [
+                      "size",
+                      "사이즈"
+                    ]
+                  ],
+                  "explanation": "clothes는 항상 복수형으로 씁니다. 색이나 치수를 물을 때는 What color? What size?처럼 앞에 what을 붙이면 됩니다."
+                },
+                {
+                  "type": "choice",
+                  "prompt": "가게 점원이 건네는 \"May I help you find something?\"의 뜻은?",
+                  "options": [
+                    "찾으시는 걸 도와드릴까요?",
+                    "이 옷은 어떠세요?",
+                    "계산은 저쪽에서 하시면 됩니다.",
+                    "지금은 그 상품이 품절입니다."
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "점원이 다가와 건네는 대표적인 말입니다. 그냥 둘러보는 중이면 \"I'm just looking, thanks.\"라고 가볍게 답하면 됩니다."
+                },
+                {
+                  "type": "ox",
+                  "prompt": "\"Do you have this in black?\"은 이 옷이 검은색으로도 있는지 묻는 말이다.",
+                  "answerBool": true,
+                  "explanation": "\"Do you have this in + 색깔/사이즈?\"는 같은 디자인의 다른 색, 다른 치수를 찾을 때 그대로 쓰는 패턴입니다."
+                },
+                {
+                  "type": "blank",
+                  "prompt": "I'm looking ___ a white shirt.",
+                  "hint": "흰색 셔츠를 찾고 있어요.",
+                  "options": [
+                    "for",
+                    "of",
+                    "to",
+                    "from"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "'~을 찾고 있다'는 look for입니다. look 뒤에 for가 와야 '찾다'라는 뜻이 됩니다."
+                },
+                {
+                  "type": "wordbank",
+                  "prompt": "파란색 재킷을 찾고 있어요.",
+                  "answer": "I'm looking for a blue jacket",
+                  "extra": [
+                    "of",
+                    "am"
+                  ],
+                  "explanation": "특정 물건을 찾을 때는 I'm looking for ~로 시작합니다. 색깔(blue)은 명사(jacket) 바로 앞에 옵니다."
+                }
+              ]
+            },
+            {
+              "title": "입어보기",
+              "questions": [
+                {
+                  "type": "listen",
+                  "audio": "Excuse me, can I try this on?",
+                  "options": [
+                    "Excuse me, can I try this on?",
+                    "Excuse me, can I try these on?",
+                    "Excuse me, can I try this one?",
+                    "Excuse me, can I turn this on?"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "this와 these는 모음과 끝소리(s/z)가 다르고, on과 one도 헷갈리기 쉽습니다. this on은 [디스온]처럼 이어져 들립니다."
+                },
+                {
+                  "type": "match",
+                  "pairs": [
+                    [
+                      "fitting room",
+                      "탈의실"
+                    ],
+                    [
+                      "tight",
+                      "꽉 끼는"
+                    ],
+                    [
+                      "loose",
+                      "헐렁한"
+                    ],
+                    [
+                      "mirror",
+                      "거울"
+                    ]
+                  ],
+                  "explanation": "옷이 낄 때는 tight, 헐렁할 때는 loose라고 합니다. 탈의실은 fitting room인데, 미국에서는 dressing room이라고도 부릅니다."
+                },
+                {
+                  "type": "choice",
+                  "prompt": "입어 본 옷이 너무 꽉 낄 때 점원에게 할 수 있는 말은?",
+                  "options": [
+                    "It's too tight for me.",
+                    "It fits perfectly.",
+                    "I'll take two of these.",
+                    "It's on the top shelf."
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "too + 형용사는 '너무 ~해서 문제'라는 뜻입니다. 반대로 헐렁하면 \"It's too loose.\"라고 하면 됩니다."
+                },
+                {
+                  "type": "ox",
+                  "prompt": "\"It fits well.\"은 옷이 너무 커서 몸에 안 맞는다는 뜻이다.",
+                  "answerBool": false,
+                  "explanation": "fit은 '치수가 맞다'라는 동사입니다. 잘 맞으면 It fits well, 안 맞으면 It doesn't fit이라고 합니다."
+                },
+                {
+                  "type": "blank",
+                  "prompt": "Do you have this in a ___ size?",
+                  "hint": "이거 더 큰 사이즈로 있나요?",
+                  "options": [
+                    "bigger",
+                    "more big",
+                    "big more",
+                    "biggest"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "big처럼 짧은 형용사는 -er을 붙여 비교급을 만듭니다. g를 한 번 더 써서 bigger가 되고, more big이라고 하지 않습니다."
+                },
+                {
+                  "type": "wordbank",
+                  "prompt": "이거 입어봐도 될까요?",
+                  "answer": "Can I try this on",
+                  "extra": [
+                    "at",
+                    "of"
+                  ],
+                  "explanation": "'입어 보다'는 try on입니다. this처럼 짧은 목적어는 try와 on 사이에 넣어 try this on이라고 말합니다."
+                }
+              ]
+            },
+            {
+              "title": "가격과 할인",
+              "questions": [
+                {
+                  "type": "listen",
+                  "audio": "Excuse me, how much is this sweater?",
+                  "options": [
+                    "Excuse me, how much is this sweater?",
+                    "Excuse me, how much was this sweater?",
+                    "Excuse me, how much are these sweaters?",
+                    "Excuse me, how much is that sweater?"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "is와 was는 시제, this와 that·sweater와 sweaters는 가리키는 대상과 수가 다릅니다. be동사와 끝소리 s까지 챙겨 들으세요."
+                },
+                {
+                  "type": "match",
+                  "pairs": [
+                    [
+                      "price",
+                      "가격"
+                    ],
+                    [
+                      "on sale",
+                      "할인 중인"
+                    ],
+                    [
+                      "expensive",
+                      "비싼"
+                    ],
+                    [
+                      "cheap",
+                      "(값이) 싼"
+                    ]
+                  ],
+                  "explanation": "미국 영어에서 on sale은 '할인 중', for sale은 '팔려고 내놓은(판매 중)'이라는 뜻으로 서로 다릅니다."
+                },
+                {
+                  "type": "choice",
+                  "prompt": "가격을 조금 깎아 줄 수 있는지 정중하게 묻고 싶을 때 가장 알맞은 말은?",
+                  "options": [
+                    "Could you give me a discount?",
+                    "Give me a discount right now.",
+                    "Make it cheaper, okay?",
+                    "I don't want to pay much."
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "Could you ~?는 Can you ~?보다 한층 부드러운 부탁입니다. \"Is there any discount?\"라고 물어봐도 좋습니다."
+                },
+                {
+                  "type": "ox",
+                  "prompt": "\"That's a good deal.\"은 가격이 아주 괜찮다(싸게 잘 사는 것)는 뜻이다.",
+                  "answerBool": true,
+                  "explanation": "deal은 '거래'라는 뜻으로, a good deal은 '싸게 잘 사는 것'을 말합니다. 세일 상품을 보고 \"What a deal!\"이라고도 합니다."
+                },
+                {
+                  "type": "blank",
+                  "prompt": "It's too ___ for me.",
+                  "hint": "저한테는 너무 비싸요.",
+                  "options": [
+                    "expensive",
+                    "expensiver",
+                    "expensives",
+                    "expensy"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "expensive처럼 긴 형용사는 -er을 붙이지 않고 more expensive로 비교합니다. expensiver라는 형태는 없습니다."
+                },
+                {
+                  "type": "wordbank",
+                  "prompt": "이 스웨터는 얼마예요?",
+                  "answer": "How much is this sweater",
+                  "extra": [
+                    "price",
+                    "many"
+                  ],
+                  "explanation": "가격을 물을 땐 How much, 개수를 물을 땐 How many입니다. How much is the price처럼 price를 겹쳐 쓰지 않습니다."
+                }
+              ]
+            },
+            {
+              "title": "교환과 환불",
+              "questions": [
+                {
+                  "type": "listen",
+                  "audio": "Can I get a refund on this jacket?",
+                  "options": [
+                    "Can I get a refund on this jacket?",
+                    "Could I get a refund on this jacket?",
+                    "Can I get a refill on this jacket?",
+                    "Can I get a refund on these jackets?"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "refund와 refill은 앞부분 re-가 같아서 뒷부분 -fund와 -fill을 들어야 구분됩니다. Can과 Could의 모음 차이도 함께 들어 보세요."
+                },
+                {
+                  "type": "match",
+                  "pairs": [
+                    [
+                      "refund",
+                      "환불"
+                    ],
+                    [
+                      "exchange",
+                      "교환"
+                    ],
+                    [
+                      "receipt",
+                      "영수증"
+                    ],
+                    [
+                      "return",
+                      "반품"
+                    ]
+                  ],
+                  "explanation": "receipt의 p는 소리 내지 않는 묵음이라 [리시트]처럼 읽습니다. 환불이나 교환에는 보통 영수증이 필요합니다."
+                },
+                {
+                  "type": "choice",
+                  "prompt": "\"Do you have the receipt with you?\"라고 점원이 물었다. 무엇을 확인하려는 것일까?",
+                  "options": [
+                    "영수증을 가지고 있는지",
+                    "현금으로 계산했는지",
+                    "회원 카드를 만들었는지",
+                    "교환할 물건을 골랐는지"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "환불이나 교환을 요청하면 점원이 가장 먼저 영수증을 확인합니다. \"Here it is.\"라고 하며 건네면 됩니다."
+                },
+                {
+                  "type": "blank",
+                  "prompt": "I'd like to ___ this for a bigger one.",
+                  "hint": "이걸 더 큰 것으로 교환하고 싶어요.",
+                  "options": [
+                    "exchange",
+                    "exchanging",
+                    "exchanged",
+                    "exchanges"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "would like to 뒤에는 동사원형이 옵니다. exchange A for B는 'A를 B로 교환하다'라는 뜻입니다."
+                },
+                {
+                  "type": "wordbank",
+                  "prompt": "이거 환불받을 수 있을까요?",
+                  "answer": "Can I get a refund on this",
+                  "extra": [
+                    "about",
+                    "yesterday"
+                  ],
+                  "explanation": "환불을 요청하는 가장 무난한 표현입니다. '이 상품에 대해서'는 전치사 on으로 나타냅니다."
+                },
+                {
+                  "type": "order",
+                  "prompt": "옷 가게에서 손님이 하는 말입니다. 쇼핑의 흐름(구경 → 입어보기 → 가격 묻기 → 다음 날 환불)대로 배열하세요.",
+                  "sequence": [
+                    "I'm just looking.",
+                    "Can I try this on?",
+                    "How much is it?",
+                    "Can I get a refund?"
+                  ],
+                  "explanation": "구경할 때 I'm just looking, 입어볼 때 try on, 가격은 How much, 환불은 refund — 이 유닛의 핵심 표현 네 가지면 쇼핑 대화가 완성됩니다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "공항과 비행기",
+          "tagline": "체크인부터 입국심사까지",
+          "lessons": [
+            {
+              "title": "체크인",
+              "questions": [
+                {
+                  "type": "listen",
+                  "audio": "May I see your passport and ticket, please?",
+                  "options": [
+                    "May I see your passport and ticket, please?",
+                    "May I see your password and ticket, please?",
+                    "May I see your passport and tickets, please?",
+                    "May I take your passport and ticket, please?"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "passport(여권)와 password(비밀번호)는 앞부분이 같아서 뒤의 -port와 -word로 구분해 들어야 합니다. 체크인 카운터의 첫 질문입니다."
+                },
+                {
+                  "type": "match",
+                  "pairs": [
+                    [
+                      "check-in counter",
+                      "체크인 카운터"
+                    ],
+                    [
+                      "passport",
+                      "여권"
+                    ],
+                    [
+                      "window seat",
+                      "창가 좌석"
+                    ],
+                    [
+                      "aisle seat",
+                      "통로 좌석"
+                    ]
+                  ],
+                  "explanation": "체크인 카운터에서 쓰는 필수 어휘입니다. aisle은 s가 묵음이라 [아일]로 발음합니다."
+                },
+                {
+                  "type": "choice",
+                  "prompt": "창가 좌석을 원할 때 하는 말은?",
+                  "options": [
+                    "Can I get a window seat?",
+                    "Can I get an aisle seat?",
+                    "Where is the window seat?",
+                    "Do you like window seats?"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "좌석 요청은 Can I get ~?으로 합니다. aisle seat는 통로 좌석이니 창가를 원하면 window seat라고 해야 합니다."
+                },
+                {
+                  "type": "ox",
+                  "prompt": "공항에서 \"check a bag\"은 가방 안을 확인한다는 뜻이다.",
+                  "answerBool": false,
+                  "explanation": "공항에서 check는 '확인하다'가 아니라 짐을 '부치다'라는 뜻입니다. I'd like to check this bag처럼 씁니다."
+                },
+                {
+                  "type": "blank",
+                  "prompt": "I'd like to ___ this bag.",
+                  "hint": "이 가방을 부치고 싶어요.",
+                  "options": [
+                    "check",
+                    "checking",
+                    "checked",
+                    "checks"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "I'd like to 뒤에는 동사원형이 옵니다. check this bag은 이 가방을 수하물로 부친다는 뜻입니다."
+                },
+                {
+                  "type": "wordbank",
+                  "prompt": "창가 좌석으로 주시겠어요?",
+                  "answer": "Can I get a window seat",
+                  "extra": [
+                    "aisle",
+                    "seats"
+                  ],
+                  "explanation": "Can I get a ~?는 부담 없이 쓰는 정중한 요청 표현입니다. 통로 좌석을 원하면 an aisle seat로 바꿔 말하면 됩니다."
+                }
+              ]
+            },
+            {
+              "title": "보안검색과 탑승",
+              "questions": [
+                {
+                  "type": "listen",
+                  "audio": "Please place your bag in the bin.",
+                  "options": [
+                    "Please place your bag in the bin.",
+                    "Please place your back in the bin.",
+                    "Please put your bag in the bin.",
+                    "Please place your bags in the bin."
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "bag은 끝소리가 유성음 /g/, back은 무성음 /k/입니다. 보안검색대에서 짐을 바구니(bin)에 담으라는 단골 안내입니다."
+                },
+                {
+                  "type": "match",
+                  "pairs": [
+                    [
+                      "security check",
+                      "보안 검색"
+                    ],
+                    [
+                      "boarding pass",
+                      "탑승권"
+                    ],
+                    [
+                      "gate",
+                      "탑승구"
+                    ],
+                    [
+                      "boarding time",
+                      "탑승 시간"
+                    ]
+                  ],
+                  "explanation": "탑승 전에 반드시 만나는 네 단어입니다. 탑승권은 boarding pass, 탑승구는 gate라고 합니다."
+                },
+                {
+                  "type": "choice",
+                  "prompt": "탑승구를 찾을 때 하는 질문은?",
+                  "options": [
+                    "Where is gate 15?",
+                    "When is gate 15?",
+                    "What is gate 15?",
+                    "How is gate 15?"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "장소를 물을 때는 Where를 씁니다. 게이트 번호는 gate 15처럼 gate 뒤에 숫자를 붙여 말합니다."
+                },
+                {
+                  "type": "ox",
+                  "prompt": "\"Boarding starts at 2:30.\"은 탑승이 2시 30분에 시작된다는 뜻이다.",
+                  "answerBool": true,
+                  "explanation": "boarding(탑승)이 주어라서 동사에 3인칭 단수 -s가 붙은 starts입니다. 게이트 안내판에서 그대로 보는 문장입니다."
+                },
+                {
+                  "type": "blank",
+                  "prompt": "May I see your ___ pass, please?",
+                  "hint": "탑승권을 보여 주시겠어요?",
+                  "options": [
+                    "boarding",
+                    "board",
+                    "boarded",
+                    "boards"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "탑승권은 boarding pass, 한 덩어리 복합명사입니다. board(탑승하다)에 -ing이 붙은 형태만 씁니다."
+                },
+                {
+                  "type": "wordbank",
+                  "prompt": "탑승은 몇 시에 시작하나요?",
+                  "answer": "What time does boarding start",
+                  "extra": [
+                    "do",
+                    "starts"
+                  ],
+                  "explanation": "시간을 물을 때는 What time ~?을 씁니다. 주어 boarding이 3인칭 단수라 does를 쓰고, 뒤의 동사는 원형 start로 돌아갑니다."
+                }
+              ]
+            },
+            {
+              "title": "기내에서",
+              "questions": [
+                {
+                  "type": "listen",
+                  "audio": "Would you like chicken or beef for your meal?",
+                  "options": [
+                    "Would you like chicken or beef for your meal?",
+                    "Would you like chicken or beans for your meal?",
+                    "Do you like chicken or beef for your meal?",
+                    "Would you like chicken and beef for your meal?"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "or는 둘 중 하나를 고르라는 뜻이고 and는 둘 다입니다. 기내식 질문에는 Chicken, please.처럼 짧게 답하면 됩니다."
+                },
+                {
+                  "type": "match",
+                  "pairs": [
+                    [
+                      "flight attendant",
+                      "승무원"
+                    ],
+                    [
+                      "blanket",
+                      "담요"
+                    ],
+                    [
+                      "seat belt",
+                      "안전벨트"
+                    ],
+                    [
+                      "meal",
+                      "기내식"
+                    ]
+                  ],
+                  "explanation": "기내에서 쓰는 기본 어휘입니다. 승무원은 flight attendant라고 부릅니다."
+                },
+                {
+                  "type": "choice",
+                  "prompt": "승무원에게 물을 정중하게 부탁하는 말은?",
+                  "options": [
+                    "Can I have some water, please?",
+                    "Give me water now.",
+                    "Do you want some water?",
+                    "I drink water every day."
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "기내 요청은 Can I have ~, please?가 기본입니다. Give me ~는 명령조라 무례하게 들립니다."
+                },
+                {
+                  "type": "ox",
+                  "prompt": "기내 방송 \"Please fasten your seat belt.\"는 안전벨트를 풀라는 뜻이다.",
+                  "answerBool": false,
+                  "explanation": "fasten은 '매다'라는 뜻이고, 푸는 것은 unfasten입니다. fasten의 t는 묵음이라 [패슨]으로 발음합니다."
+                },
+                {
+                  "type": "blank",
+                  "prompt": "Could I get a ___, please?",
+                  "hint": "담요 한 장 주시겠어요?",
+                  "options": [
+                    "blanket",
+                    "blankets",
+                    "blanketing",
+                    "blank"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "a 뒤에는 단수 명사가 옵니다. Could I get a blanket?은 담요를 부탁하는 정중한 표현입니다."
+                },
+                {
+                  "type": "wordbank",
+                  "prompt": "물 좀 주시겠어요?",
+                  "answer": "Can I have some water please",
+                  "extra": [
+                    "do",
+                    "waters"
+                  ],
+                  "explanation": "water는 셀 수 없는 명사라 some water라고 합니다. 문장 끝에 please를 붙이면 한층 정중해집니다."
+                }
+              ]
+            },
+            {
+              "title": "입국심사",
+              "questions": [
+                {
+                  "type": "listen",
+                  "audio": "What is the purpose of your visit?",
+                  "options": [
+                    "What is the purpose of your visit?",
+                    "What is the purpose of your visa?",
+                    "What was the purpose of your visit?",
+                    "What is the purpose of her visit?"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "visit[비짓]과 visa[비자]는 끝소리로 구분합니다. 입국심사에서 가장 먼저 받는 질문이니 통째로 익혀 두세요."
+                },
+                {
+                  "type": "match",
+                  "pairs": [
+                    [
+                      "immigration",
+                      "입국 심사"
+                    ],
+                    [
+                      "sightseeing",
+                      "관광"
+                    ],
+                    [
+                      "on business",
+                      "출장차"
+                    ],
+                    [
+                      "length of stay",
+                      "체류 기간"
+                    ]
+                  ],
+                  "explanation": "입국심사 필수 어휘입니다. 출장으로 왔다면 on business, 얼마나 머무는지는 length of stay입니다."
+                },
+                {
+                  "type": "choice",
+                  "prompt": "입국심사에서 '관광하러 왔어요'라고 답하는 말은?",
+                  "options": [
+                    "I'm here for sightseeing.",
+                    "I'm here for business.",
+                    "I like sightseeing a lot.",
+                    "I went sightseeing yesterday."
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "방문 목적은 I'm here for + 명사로 답합니다. sightseeing은 관광, business는 출장입니다."
+                },
+                {
+                  "type": "blank",
+                  "prompt": "How long will you ___?",
+                  "hint": "얼마나 머무르실 건가요?",
+                  "options": [
+                    "stay",
+                    "staying",
+                    "stayed",
+                    "stays"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "조동사 will 뒤에는 동사원형 stay가 옵니다. How long ~?은 기간을 묻는 질문입니다."
+                },
+                {
+                  "type": "wordbank",
+                  "prompt": "일주일 동안 머물 거예요.",
+                  "answer": "I will stay for a week",
+                  "extra": [
+                    "on",
+                    "weeks"
+                  ],
+                  "explanation": "머무는 기간은 for + 기간(a week)으로 말합니다. How long will you stay?에 대한 정석 답변입니다."
+                },
+                {
+                  "type": "order",
+                  "prompt": "공항 도착부터 입국까지, 절차를 순서대로 배열해 보세요.",
+                  "sequence": [
+                    "Check in and check a bag",
+                    "Go through security",
+                    "Board at the gate",
+                    "Go through immigration"
+                  ],
+                  "explanation": "체크인과 수하물 부치기 → 보안검색 → 게이트에서 탑승 → 도착 후 입국심사. 이 유닛에서 배운 공항 절차의 전체 흐름입니다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "호텔에서",
+          "tagline": "체크인부터 체크아웃까지",
+          "lessons": [
+            {
+              "title": "체크인하기",
+              "questions": [
+                {
+                  "type": "listen",
+                  "audio": "I have a reservation under the name Kim.",
+                  "options": [
+                    "I have a reservation under the name Kim.",
+                    "I had a reservation under the name Kim.",
+                    "I have a reservation under the name Tim.",
+                    "I have two reservations under the name Kim."
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "체크인의 첫 문장입니다. 이름을 말할 땐 under the name + 성. have와 had는 끝소리 v/d로 시제가 갈리니 끝까지 들으세요."
+                },
+                {
+                  "type": "match",
+                  "pairs": [
+                    [
+                      "check in",
+                      "체크인하다"
+                    ],
+                    [
+                      "front desk",
+                      "안내 데스크"
+                    ],
+                    [
+                      "key card",
+                      "카드 키"
+                    ],
+                    [
+                      "night",
+                      "박, 하룻밤"
+                    ]
+                  ],
+                  "explanation": "호텔 입실 필수 어휘입니다. front desk에서 check in을 하고 key card를 받습니다. 숙박 일수는 night로 셉니다."
+                },
+                {
+                  "type": "choice",
+                  "prompt": "\"I have a reservation under Kim.\"에서 under Kim의 뜻은?",
+                  "options": [
+                    "김이라는 이름으로",
+                    "김 씨의 아래층에",
+                    "김 씨보다 먼저",
+                    "김 씨와 함께"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "예약이 어떤 이름으로 되어 있는지 말할 때 under + 이름을 씁니다. 위치의 '아래'가 아니라 '~ 이름 앞으로'라는 뜻입니다."
+                },
+                {
+                  "type": "ox",
+                  "prompt": "체크인할 때 직원이 \"May I see your ID?\"라고 하면 신분증을 보여 달라는 뜻이다.",
+                  "answerBool": true,
+                  "explanation": "체크인 때는 보통 여권이나 신분증을 확인합니다. ID는 identification의 줄임말로, 여권을 내밀며 Here you go.라고 답하면 됩니다."
+                },
+                {
+                  "type": "blank",
+                  "prompt": "How many ___ are you staying?",
+                  "hint": "며칠 밤 묵으세요?",
+                  "options": [
+                    "nights",
+                    "night",
+                    "nighting",
+                    "nightly"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "숙박은 밤(night) 단위로 세고, How many 뒤에는 복수형이 옵니다. 3박이면 For three nights.라고 답하세요."
+                },
+                {
+                  "type": "wordbank",
+                  "prompt": "김이라는 이름으로 예약했어요.",
+                  "answer": "I have a reservation under the name Kim",
+                  "extra": [
+                    "to",
+                    "by"
+                  ],
+                  "explanation": "I have a reservation under the name + 성 — 체크인 데스크에서 가장 먼저 쓰는 문장입니다. 이름 앞 전치사는 under입니다."
+                }
+              ]
+            },
+            {
+              "title": "부탁하기",
+              "questions": [
+                {
+                  "type": "listen",
+                  "audio": "Could I get a wake-up call at six?",
+                  "options": [
+                    "Could I get a wake-up call at six?",
+                    "Can I get a wake-up call at six?",
+                    "Could I make a wake-up call at six?",
+                    "Could I get a wake-up call at ten?"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "모닝콜은 영어로 wake-up call입니다. 서비스를 '받다'는 get(make 아님)이고, Could I ~?는 Can I ~?보다 정중한 부탁입니다. 끝의 시각까지 확인하세요."
+                },
+                {
+                  "type": "match",
+                  "pairs": [
+                    [
+                      "towel",
+                      "수건"
+                    ],
+                    [
+                      "wake-up call",
+                      "모닝콜"
+                    ],
+                    [
+                      "password",
+                      "비밀번호"
+                    ],
+                    [
+                      "extra",
+                      "추가의, 여분의"
+                    ]
+                  ],
+                  "explanation": "객실에서 부탁할 때 쓰는 어휘입니다. 한국어의 '모닝콜'은 영어로 wake-up call이라고 해야 통합니다."
+                },
+                {
+                  "type": "choice",
+                  "prompt": "와이파이 비밀번호를 물을 때 알맞은 말은?",
+                  "options": [
+                    "What's the Wi-Fi password?",
+                    "How much is the Wi-Fi?",
+                    "What time is the Wi-Fi?",
+                    "Where is the password from?"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "비밀번호처럼 정보 자체를 물을 땐 What's the ~?를 씁니다. How much는 가격, What time은 시각을 묻는 말입니다."
+                },
+                {
+                  "type": "ox",
+                  "prompt": "\"wake-up call\"은 아침에 일어난 뒤 프런트에 거는 전화를 뜻한다.",
+                  "answerBool": false,
+                  "explanation": "반대입니다. 호텔이 정해 둔 시간에 객실로 전화해 깨워 주는 서비스가 wake-up call입니다. 신청할 땐 Could I get a wake-up call at seven?"
+                },
+                {
+                  "type": "blank",
+                  "prompt": "What's the Wi-Fi ___?",
+                  "hint": "와이파이 비밀번호가 뭐예요?",
+                  "options": [
+                    "password",
+                    "passport",
+                    "keyword",
+                    "number"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "Wi-Fi password가 굳어진 표현입니다. passport(여권)와 헷갈리지 마세요 — 호텔에서 둘 다 자주 듣는 단어입니다."
+                },
+                {
+                  "type": "wordbank",
+                  "prompt": "수건을 좀 더 받을 수 있을까요?",
+                  "answer": "Could I get some more towels",
+                  "extra": [
+                    "much",
+                    "of"
+                  ],
+                  "explanation": "Could I get + 물건 = 정중한 부탁의 공식입니다. '좀 더'는 some more + 복수 명사로 표현합니다."
+                }
+              ]
+            },
+            {
+              "title": "문제가 생겼어요",
+              "questions": [
+                {
+                  "type": "listen",
+                  "audio": "The air conditioner in my room doesn't work.",
+                  "options": [
+                    "The air conditioner in my room doesn't work.",
+                    "The air conditioner in my room didn't work.",
+                    "The air conditioner in your room doesn't work.",
+                    "The air conditioners in my room don't work."
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "doesn't work = (기계가) 작동하지 않는다, 즉 고장입니다. 지금 고장 난 것을 알릴 땐 현재형 doesn't, 과거 일이면 didn't를 씁니다."
+                },
+                {
+                  "type": "match",
+                  "pairs": [
+                    [
+                      "air conditioner",
+                      "에어컨"
+                    ],
+                    [
+                      "noisy",
+                      "시끄러운"
+                    ],
+                    [
+                      "broken",
+                      "고장 난"
+                    ],
+                    [
+                      "another room",
+                      "다른 방"
+                    ]
+                  ],
+                  "explanation": "문제 상황 어휘입니다. '에어컨'은 air conditioner를 줄인 말이라 영어로는 끝까지 말해야 합니다. broken은 '고장 난'입니다."
+                },
+                {
+                  "type": "choice",
+                  "prompt": "\"The heater doesn't work.\"의 뜻은?",
+                  "options": [
+                    "난방이 고장 나서 작동하지 않는다",
+                    "난방이 일을 너무 많이 한다",
+                    "난방을 일부러 꺼 두었다",
+                    "난방이 새로 설치되었다"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "work에는 '일하다' 외에 기계가 '작동하다'라는 뜻이 있습니다. doesn't work는 고장을 알리는 가장 흔한 표현입니다."
+                },
+                {
+                  "type": "ox",
+                  "prompt": "방에 문제가 있을 때 \"There is a problem with my room.\"이라고 말할 수 있다.",
+                  "answerBool": true,
+                  "explanation": "There is a problem with + 명사 = 문제를 알리는 기본 문형입니다. 에어컨이 문제면 with the air conditioner로 바꿔 쓰면 됩니다."
+                },
+                {
+                  "type": "blank",
+                  "prompt": "My room is too ___. Can I get another room?",
+                  "hint": "방이 너무 시끄러워요. 다른 방을 받을 수 있을까요?",
+                  "options": [
+                    "noisy",
+                    "noise",
+                    "noisily",
+                    "noises"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "be동사 뒤에는 형용사 noisy가 옵니다. noise는 명사(소음), noisily는 부사입니다. too + 형용사 = '너무 ~하다'."
+                },
+                {
+                  "type": "wordbank",
+                  "prompt": "에어컨이 작동하지 않아요.",
+                  "answer": "The air conditioner doesn't work",
+                  "extra": [
+                    "don't",
+                    "working"
+                  ],
+                  "explanation": "주어가 3인칭 단수(the air conditioner)이므로 doesn't + 동사원형 work입니다. don't는 복수 주어에 씁니다."
+                }
+              ]
+            },
+            {
+              "title": "체크아웃",
+              "questions": [
+                {
+                  "type": "listen",
+                  "audio": "I'd like to check out now, please.",
+                  "options": [
+                    "I'd like to check out now, please.",
+                    "I'd like to check in now, please.",
+                    "We'd like to check out now, please.",
+                    "I'd love to check out now, please."
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "check in은 입실, check out은 퇴실 — in/out 한 단어로 뜻이 반대가 됩니다. I'd like to는 I want to보다 정중한 표현입니다."
+                },
+                {
+                  "type": "match",
+                  "pairs": [
+                    [
+                      "check out",
+                      "체크아웃하다"
+                    ],
+                    [
+                      "luggage",
+                      "짐, 수하물"
+                    ],
+                    [
+                      "leave",
+                      "두고 가다"
+                    ],
+                    [
+                      "pick up",
+                      "찾아가다"
+                    ]
+                  ],
+                  "explanation": "체크아웃 어휘입니다. 짐(luggage)을 맡길 땐 leave, 나중에 찾을 땐 pick up을 씁니다."
+                },
+                {
+                  "type": "choice",
+                  "prompt": "체크아웃 시간을 물을 때 알맞은 말은?",
+                  "options": [
+                    "What time is check-out?",
+                    "What time is check-in?",
+                    "How long is check-out?",
+                    "Where is check-out?"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "시각을 물을 땐 What time is ~?입니다. How long은 걸리는 시간(기간), Where는 장소를 묻는 말이라 어긋납니다."
+                },
+                {
+                  "type": "blank",
+                  "prompt": "Could I ___ my bags here for a few hours?",
+                  "hint": "몇 시간 동안 가방을 여기 맡겨도 될까요?",
+                  "options": [
+                    "leave",
+                    "leaves",
+                    "leaving",
+                    "left"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "조동사 could 뒤에는 동사원형 leave가 옵니다. 여기서 leave는 '떠나다'가 아니라 '(짐을) 두고 가다, 맡기다'라는 뜻입니다."
+                },
+                {
+                  "type": "wordbank",
+                  "prompt": "짐을 여기에 맡겨도 될까요?",
+                  "answer": "Can I leave my luggage here",
+                  "extra": [
+                    "at",
+                    "until"
+                  ],
+                  "explanation": "체크아웃 후 짐을 맡길 때의 문장입니다. leave + 짐 + here = '~을 여기에 두고 가다'. 찾을 땐 I'm here to pick up my luggage."
+                },
+                {
+                  "type": "order",
+                  "prompt": "호텔 이용의 흐름을 순서대로 배열해 보세요.",
+                  "sequence": [
+                    "I have a reservation.",
+                    "Here is your key card.",
+                    "Could I get more towels?",
+                    "What time is check-out?",
+                    "Can I leave my luggage?"
+                  ],
+                  "explanation": "예약 확인 → 카드 키 수령(체크인 완료) → 머무는 동안 부탁 → 체크아웃 시간 확인 → 짐 맡기기. 호텔 이용의 전체 흐름입니다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "날씨와 스몰토크",
+          "tagline": "어색한 침묵을 깨는 한마디",
+          "lessons": [
+            {
+              "title": "날씨 이야기",
+              "questions": [
+                {
+                  "type": "listen",
+                  "audio": "It's a beautiful day, isn't it?",
+                  "options": [
+                    "It's a beautiful day, isn't it?",
+                    "It's a beautiful bay, isn't it?",
+                    "It's a beautiful place, isn't it?",
+                    "It was a beautiful day, wasn't it?"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "day와 bay는 첫 자음만 다른 최소대립쌍입니다. 끝의 \"isn't it?\"은 동의를 구하는 부가의문문으로, 스몰토크를 여는 대표 문형입니다."
+                },
+                {
+                  "type": "match",
+                  "pairs": [
+                    [
+                      "sunny",
+                      "맑은"
+                    ],
+                    [
+                      "cloudy",
+                      "흐린"
+                    ],
+                    [
+                      "chilly",
+                      "쌀쌀한"
+                    ],
+                    [
+                      "humid",
+                      "습한"
+                    ]
+                  ],
+                  "explanation": "날씨 형용사는 \"It's + 형용사\" 틀에 그대로 넣어 씁니다. It's sunny. / It's chilly."
+                },
+                {
+                  "type": "choice",
+                  "prompt": "\"비가 올 것 같아요\"를 바르게 말한 것은?",
+                  "options": [
+                    "It looks like rain.",
+                    "It looks rain.",
+                    "It likes rain.",
+                    "It looking rain."
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "look like + 명사 = \"~일 것 같다\". looks 뒤에 명사를 바로 붙이거나(looks rain) like를 빼면 틀립니다."
+                },
+                {
+                  "type": "ox",
+                  "prompt": "미국에서 날씨 이야기는 처음 보는 사람에게도 무난하게 꺼낼 수 있는 스몰토크 주제다.",
+                  "answerBool": true,
+                  "explanation": "날씨는 나이·정치·연봉과 달리 누구에게나 안전한 주제입니다. \"Nice day, isn't it?\" 한마디면 대화가 시작됩니다."
+                },
+                {
+                  "type": "blank",
+                  "prompt": "It's a bit ___ today. Take your jacket.",
+                  "hint": "오늘 좀 쌀쌀하네요. 재킷 챙기세요.",
+                  "options": [
+                    "chilly",
+                    "chily",
+                    "chillie",
+                    "chilled"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "쌀쌀한 날씨는 chilly입니다. a bit을 붙이면 \"조금 ~하다\"로 부드러워집니다."
+                },
+                {
+                  "type": "wordbank",
+                  "prompt": "오늘 비가 올 것 같아요.",
+                  "answer": "It looks like rain today",
+                  "extra": [
+                    "raining",
+                    "look"
+                  ],
+                  "explanation": "look like 뒤에는 명사(rain)가 옵니다. \"It looks like raining\"은 흔한 오류이니 주의하세요."
+                }
+              ]
+            },
+            {
+              "title": "주말 이야기",
+              "questions": [
+                {
+                  "type": "listen",
+                  "audio": "Do you have any plans for the weekend?",
+                  "options": [
+                    "Do you have any plans for the weekend?",
+                    "Do you have any pans for the weekend?",
+                    "Do you have a plan for the weekend?",
+                    "Do you have any plans for the week?"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "plans의 pl-과 pans의 p-, 끝의 weekend와 week를 구분해 들으세요. 계획을 물을 때는 보통 복수형 plans를 씁니다."
+                },
+                {
+                  "type": "match",
+                  "pairs": [
+                    [
+                      "weekend",
+                      "주말"
+                    ],
+                    [
+                      "plans",
+                      "계획"
+                    ],
+                    [
+                      "not much",
+                      "별거 없어요"
+                    ],
+                    [
+                      "stay home",
+                      "집에 있다"
+                    ]
+                  ],
+                  "explanation": "Not much는 \"별거 안 해요/안 했어요\"라는 뜻으로, 주말 질문에 가장 자주 나오는 대답입니다."
+                },
+                {
+                  "type": "choice",
+                  "prompt": "\"How was your weekend?\"에 대한 자연스러운 대답은?",
+                  "options": [
+                    "It was good. I stayed home.",
+                    "Yes, it is a weekend.",
+                    "You are welcome.",
+                    "See you next weekend."
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "\"어땠어요?\"라는 과거 질문이므로 It was...로 소감을 말하고, 한 일을 한 문장 덧붙이면 대화가 이어집니다."
+                },
+                {
+                  "type": "ox",
+                  "prompt": "\"Not much.\"는 성의 없는 말이라 스몰토크 대답으로 쓰면 실례다.",
+                  "answerBool": false,
+                  "explanation": "Not much는 \"별거 안 했어요\" 정도의 아주 흔하고 무난한 대답입니다. 뒤에 \"How about you?\"를 붙이면 더 좋습니다."
+                },
+                {
+                  "type": "blank",
+                  "prompt": "What are you ___ this weekend?",
+                  "hint": "이번 주말에 뭐 해요?",
+                  "options": [
+                    "doing",
+                    "do",
+                    "does",
+                    "done"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "가까운 계획은 현재진행형(are you doing)으로 묻습니다. 이미 정해진 일정을 묻는 자연스러운 표현입니다."
+                },
+                {
+                  "type": "wordbank",
+                  "prompt": "별거 안 했어요. 그냥 집에 있었어요.",
+                  "answer": "Not much I just stayed home",
+                  "extra": [
+                    "stays",
+                    "many"
+                  ],
+                  "explanation": "지난 일이므로 stayed(과거형)입니다. 쓸 때는 \"Not much. I just stayed home.\"처럼 두 문장으로 나눕니다."
+                }
+              ]
+            },
+            {
+              "title": "칭찬하고 답하기",
+              "questions": [
+                {
+                  "type": "listen",
+                  "audio": "I really like your scarf, where did you get it?",
+                  "options": [
+                    "I really like your scarf, where did you get it?",
+                    "I really like your skirt, where did you get it?",
+                    "I really like your scarf, when did you get it?",
+                    "I really liked your scarf, where did you get it?"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "scarf/skirt, where/when처럼 비슷한 소리를 끝까지 구분하세요. 칭찬 뒤에 \"어디서 샀어요?\"를 붙이면 대화가 자연스럽게 이어집니다."
+                },
+                {
+                  "type": "match",
+                  "pairs": [
+                    [
+                      "scarf",
+                      "목도리"
+                    ],
+                    [
+                      "haircut",
+                      "머리 모양"
+                    ],
+                    [
+                      "kind",
+                      "친절한"
+                    ],
+                    [
+                      "compliment",
+                      "칭찬"
+                    ]
+                  ],
+                  "explanation": "get a haircut은 \"머리를 자르다\". compliment(칭찬)를 주고받는 것이 이 레슨의 주제입니다."
+                },
+                {
+                  "type": "choice",
+                  "prompt": "칭찬 \"I like your jacket.\"에 가장 자연스러운 대답은?",
+                  "options": [
+                    "Thanks, that's kind of you.",
+                    "No, thank you.",
+                    "It's your jacket.",
+                    "Never mind."
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "칭찬은 Thanks로 간단히 받아들이면 됩니다. No, thank you.는 거절, Never mind.는 \"신경 쓰지 마세요\"입니다."
+                },
+                {
+                  "type": "ox",
+                  "prompt": "미국에서는 칭찬을 받으면 \"No, no.\" 하고 강하게 부정하는 것이 예의다.",
+                  "answerBool": false,
+                  "explanation": "겸손하게 부정하는 한국식 반응은 영어에서는 오히려 어색합니다. 미소와 함께 Thanks. 한마디로 받아들이는 것이 자연스럽습니다."
+                },
+                {
+                  "type": "blank",
+                  "prompt": "I like your ___. It looks great.",
+                  "hint": "머리 모양 멋져요. 아주 잘 어울려요.",
+                  "options": [
+                    "haircut",
+                    "haircutting",
+                    "hairscut",
+                    "haircutted"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "머리 모양(자른 머리)은 haircut 한 단어입니다. \"I like your + 명사\"는 부담 없는 칭찬의 기본 틀입니다."
+                },
+                {
+                  "type": "wordbank",
+                  "prompt": "고마워요, 정말 친절하시네요.",
+                  "answer": "Thanks that's kind of you",
+                  "extra": [
+                    "kindly",
+                    "your"
+                  ],
+                  "explanation": "That's kind of you.는 칭찬이나 호의에 대한 정중한 답례입니다. kind of + 사람 형태를 통째로 외우세요."
+                }
+              ]
+            },
+            {
+              "title": "맞장구와 리액션",
+              "questions": [
+                {
+                  "type": "listen",
+                  "audio": "That sounds like so much fun, tell me more.",
+                  "options": [
+                    "That sounds like so much fun, tell me more.",
+                    "That sounds like so much sun, tell me more.",
+                    "That sounded like so much fun, tell me more.",
+                    "That sounds like so much fun, tell us more."
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "fun과 sun은 첫 자음만 다른 최소대립쌍입니다. Tell me more.는 \"더 얘기해 봐요\"라며 상대의 말을 끌어내는 리액션입니다."
+                },
+                {
+                  "type": "match",
+                  "pairs": [
+                    [
+                      "Really?",
+                      "정말요?"
+                    ],
+                    [
+                      "I know",
+                      "그러니까요"
+                    ],
+                    [
+                      "No way",
+                      "말도 안 돼"
+                    ],
+                    [
+                      "Sounds fun",
+                      "재밌겠다"
+                    ]
+                  ],
+                  "explanation": "맞장구 표현들입니다. I know는 여기서 \"알아요\"가 아니라 \"내 말이 그 말이에요\"라는 공감의 표현입니다."
+                },
+                {
+                  "type": "choice",
+                  "prompt": "상대가 \"I went to Busan last weekend.\"라고 말했을 때, 자연스러운 맞장구는?",
+                  "options": [
+                    "Oh, really? How was it?",
+                    "I am Busan.",
+                    "You are welcome.",
+                    "Goodbye now."
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "리액션(Oh, really?) 뒤에 질문(How was it?)을 붙이면 대화가 끊기지 않고 이어집니다. 스몰토크의 핵심 기술입니다."
+                },
+                {
+                  "type": "blank",
+                  "prompt": "I ___. The bus is always late.",
+                  "hint": "그러니까요. 버스는 늘 늦어요.",
+                  "options": [
+                    "know",
+                    "knows",
+                    "knowing",
+                    "known"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "상대의 불평에 맞장구칠 때 I know.를 씁니다. 주어가 I이므로 동사원형 know입니다."
+                },
+                {
+                  "type": "wordbank",
+                  "prompt": "그거 정말 재밌겠네요.",
+                  "answer": "That sounds like a lot of fun",
+                  "extra": [
+                    "sound",
+                    "much"
+                  ],
+                  "explanation": "주어가 That이므로 sounds에 -s가 붙습니다. sound like + 명사 = \"~처럼 들리다, ~일 것 같다\"."
+                },
+                {
+                  "type": "order",
+                  "prompt": "엘리베이터에서 만난 이웃과의 스몰토크입니다. 자연스러운 순서로 배열해 보세요.",
+                  "sequence": [
+                    "Nice day, isn't it?",
+                    "It really is.",
+                    "Any plans this weekend?",
+                    "Not much. Maybe a walk."
+                  ],
+                  "explanation": "날씨로 말문 열기 → 맞장구 → 주말 화제로 잇기 → 가볍게 답하기. 이 흐름이 스몰토크의 기본 공식입니다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "감정과 의견",
+          "tagline": "내 기분과 생각을 말하기",
+          "lessons": [
+            {
+              "title": "기분 말하기",
+              "questions": [
+                {
+                  "type": "listen",
+                  "audio": "I'm really excited about the concert this Friday night.",
+                  "options": [
+                    "I'm really excited about the concert this Friday night.",
+                    "I was really excited about the concert this Friday night.",
+                    "I'm really excited about the concerts this Friday night.",
+                    "I'm really excited about the contest this Friday night."
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "concert(콘서트)와 contest(대회)는 가운데 소리만 다릅니다. I'm과 I was의 시제 차이도 함께 구별해 보세요."
+                },
+                {
+                  "type": "match",
+                  "pairs": [
+                    [
+                      "excited",
+                      "신나는"
+                    ],
+                    [
+                      "tired",
+                      "피곤한"
+                    ],
+                    [
+                      "nervous",
+                      "긴장되는"
+                    ],
+                    [
+                      "because",
+                      "왜냐하면"
+                    ]
+                  ],
+                  "explanation": "기분을 말하는 세 가지 기본 형용사입니다. 이유를 붙일 때는 because로 문장을 이어 줍니다."
+                },
+                {
+                  "type": "choice",
+                  "prompt": "친구가 \"Why are you so tired?\"라고 물으면 어울리는 대답은?",
+                  "options": [
+                    "Because I worked late last night.",
+                    "Yes, I like it a lot.",
+                    "You're welcome.",
+                    "See you tomorrow."
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "Why(왜)로 물으면 Because(왜냐하면)로 이유를 답합니다. 질문과 대답이 한 쌍으로 움직입니다."
+                },
+                {
+                  "type": "ox",
+                  "prompt": "\"I'm nervous.\"는 \"나는 신나요.\"라는 뜻이다.",
+                  "answerBool": false,
+                  "explanation": "nervous는 긴장된다는 뜻입니다. 신난다고 말하려면 I'm excited.라고 해야 합니다."
+                },
+                {
+                  "type": "blank",
+                  "prompt": "I feel ___ before my presentation.",
+                  "hint": "발표 전에는 긴장돼요.",
+                  "options": [
+                    "nervous",
+                    "nervously",
+                    "nerve",
+                    "to nervous"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "feel 뒤에는 형용사가 옵니다: feel nervous, feel tired. 부사 nervously를 쓰면 틀립니다."
+                },
+                {
+                  "type": "wordbank",
+                  "prompt": "오늘 시험이 있어서 긴장돼요.",
+                  "answer": "I'm nervous because I have a test today",
+                  "extra": [
+                    "am",
+                    "was"
+                  ],
+                  "explanation": "기분 + because + 이유. 감정을 말한 다음 because로 까닭을 붙이는 기본 틀입니다."
+                }
+              ]
+            },
+            {
+              "title": "좋아요와 별로예요",
+              "questions": [
+                {
+                  "type": "listen",
+                  "audio": "I love this song, but he prefers quiet music.",
+                  "options": [
+                    "I love this song, but he prefers quiet music.",
+                    "I loved this song, but he prefers quiet music.",
+                    "I love this song, but she prefers quiet music.",
+                    "I love this song, but he preferred quiet music."
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "love와 loved, prefers와 preferred처럼 끝의 -d 소리는 짧게 지나갑니다. 시제를 끝소리로 잡아내는 연습입니다."
+                },
+                {
+                  "type": "match",
+                  "pairs": [
+                    [
+                      "I love it",
+                      "정말 마음에 들어요"
+                    ],
+                    [
+                      "not my thing",
+                      "내 취향이 아닌"
+                    ],
+                    [
+                      "prefer",
+                      "더 좋아하다"
+                    ],
+                    [
+                      "taste",
+                      "취향"
+                    ]
+                  ],
+                  "explanation": "좋고 싫음을 말하는 핵심 표현들입니다. not my thing은 직역(내 물건)이 아니라 취향을 말하는 관용구입니다."
+                },
+                {
+                  "type": "choice",
+                  "prompt": "\"It's not my thing.\"의 자연스러운 뜻은?",
+                  "options": [
+                    "제 취향이 아니에요",
+                    "제 물건이 아니에요",
+                    "별일 아니에요",
+                    "아직 못 정했어요"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "thing을 물건으로 직역하면 안 됩니다. 싫다는 말 대신 부드럽게 거절할 때 쓰는 표현입니다."
+                },
+                {
+                  "type": "ox",
+                  "prompt": "\"I prefer coffee.\"는 커피를 싫어한다는 뜻이다.",
+                  "answerBool": false,
+                  "explanation": "prefer는 여럿 중에서 하나를 더 좋아한다는 뜻입니다. 싫다는 말이 아니라 선택을 말합니다."
+                },
+                {
+                  "type": "blank",
+                  "prompt": "I prefer tea ___ coffee.",
+                  "hint": "저는 커피보다 차를 더 좋아해요.",
+                  "options": [
+                    "to",
+                    "than",
+                    "that",
+                    "from"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "prefer A to B: B보다 A가 더 좋다. 비교라고 해서 than을 쓰면 틀립니다. than은 better than처럼 비교급과 씁니다."
+                },
+                {
+                  "type": "wordbank",
+                  "prompt": "그건 별로 제 취향이 아니에요.",
+                  "answer": "It's not really my thing",
+                  "extra": [
+                    "think",
+                    "a"
+                  ],
+                  "accept": [
+                    "It's really not my thing"
+                  ],
+                  "explanation": "not really를 넣으면 거절이 한결 부드러워집니다. thing과 think를 헷갈리지 마세요."
+                }
+              ]
+            },
+            {
+              "title": "동의와 반대",
+              "questions": [
+                {
+                  "type": "listen",
+                  "audio": "I see your point, but I don't really agree.",
+                  "options": [
+                    "I see your point, but I don't really agree.",
+                    "I saw your point, but I don't really agree.",
+                    "I see your points, but I don't really agree.",
+                    "I see your point, but I didn't really agree."
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "see와 saw, don't와 didn't의 차이를 들어 보세요. point 끝의 -s 유무도 뜻을 바꿉니다."
+                },
+                {
+                  "type": "match",
+                  "pairs": [
+                    [
+                      "agree",
+                      "동의하다"
+                    ],
+                    [
+                      "disagree",
+                      "반대하다"
+                    ],
+                    [
+                      "opinion",
+                      "의견"
+                    ],
+                    [
+                      "point",
+                      "요점"
+                    ]
+                  ],
+                  "explanation": "토론의 기본 어휘입니다. agree 앞에 dis-를 붙이면 반대말 disagree가 됩니다."
+                },
+                {
+                  "type": "choice",
+                  "prompt": "회의에서 부드럽게 반대하고 싶을 때 가장 알맞은 표현은?",
+                  "options": [
+                    "I see your point, but I'm not sure.",
+                    "You're totally wrong.",
+                    "That's a terrible idea.",
+                    "Stop talking, please."
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "먼저 I see your point로 상대를 인정한 뒤 but으로 내 생각을 말하면 반대가 부드러워집니다."
+                },
+                {
+                  "type": "ox",
+                  "prompt": "\"I agree with you.\"는 상대의 의견에 동의한다는 뜻이다.",
+                  "answerBool": true,
+                  "explanation": "agree with + 사람: ~에게 동의하다. 짧게 I agree.만 말해도 충분합니다."
+                },
+                {
+                  "type": "blank",
+                  "prompt": "In my ___, the movie was boring.",
+                  "hint": "제 생각에는 그 영화가 지루했어요.",
+                  "options": [
+                    "opinion",
+                    "opinions",
+                    "opining",
+                    "opinionate"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "In my opinion(제 생각에는)은 항상 단수로 굳어진 표현입니다. 의견을 말하기 전에 앞에 붙여 주세요."
+                },
+                {
+                  "type": "wordbank",
+                  "prompt": "무슨 말씀인지 알겠지만, 저는 동의하지 않아요.",
+                  "answer": "I see your point but I don't agree",
+                  "extra": [
+                    "agrees",
+                    "am"
+                  ],
+                  "accept": [
+                    "I don't agree but I see your point"
+                  ],
+                  "explanation": "인정(I see your point) + but + 내 입장. 부드러운 반대의 공식입니다."
+                }
+              ]
+            },
+            {
+              "title": "위로와 격려",
+              "questions": [
+                {
+                  "type": "listen",
+                  "audio": "Don't worry too much, everything will be fine.",
+                  "options": [
+                    "Don't worry too much, everything will be fine.",
+                    "Don't hurry too much, everything will be fine.",
+                    "Don't worry too much, everyone will be fine.",
+                    "Don't worry too much, everything would be fine."
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "worry와 hurry는 첫 자음만 다른 최소대립쌍입니다. everything과 everyone의 끝부분도 구별해 보세요."
+                },
+                {
+                  "type": "match",
+                  "pairs": [
+                    [
+                      "Don't worry",
+                      "걱정하지 마세요"
+                    ],
+                    [
+                      "That's too bad",
+                      "정말 안됐네요"
+                    ],
+                    [
+                      "cheer up",
+                      "기운 내요"
+                    ],
+                    [
+                      "You can do it",
+                      "넌 할 수 있어"
+                    ]
+                  ],
+                  "explanation": "위로와 격려의 4대 표현입니다. That's too bad는 나쁜 소식을 들었을 때의 공감 반응입니다."
+                },
+                {
+                  "type": "choice",
+                  "prompt": "친구가 \"I failed my driving test.\"라고 하면 알맞은 반응은?",
+                  "options": [
+                    "That's too bad.",
+                    "Congratulations!",
+                    "You're welcome.",
+                    "Nice to meet you."
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "나쁜 소식에는 먼저 That's too bad.로 공감을 표현합니다. 축하나 인사말을 쓰면 실례가 됩니다."
+                },
+                {
+                  "type": "blank",
+                  "prompt": "Don't ___ about it too much.",
+                  "hint": "그 일은 너무 걱정하지 마세요.",
+                  "options": [
+                    "worry",
+                    "worried",
+                    "worrying",
+                    "to worry"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "Don't 뒤에는 동사원형이 옵니다: Don't worry. Don't be late. 과거형이나 -ing를 쓰면 틀립니다."
+                },
+                {
+                  "type": "wordbank",
+                  "prompt": "걱정하지 마, 넌 할 수 있어.",
+                  "answer": "Don't worry you can do it",
+                  "extra": [
+                    "worried",
+                    "does"
+                  ],
+                  "explanation": "공감 다음에는 격려입니다. Don't worry 뒤에 You can do it.을 붙이면 완성됩니다."
+                },
+                {
+                  "type": "order",
+                  "prompt": "고민을 듣고 위로하는 대화를 순서대로 배열해 보세요.",
+                  "sequence": [
+                    "I failed my exam.",
+                    "That's too bad.",
+                    "You can do it next time.",
+                    "Thanks, I feel better."
+                  ],
+                  "explanation": "고민 말하기 → 공감(That's too bad) → 격려(You can do it) → 감사. 위로 대화의 기본 흐름입니다."
+                }
+              ]
+            }
+          ]
         }
       ]
     },
