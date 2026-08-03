@@ -9,16 +9,22 @@
 https://github.com/new?name=implant-academy 에서 저장소를 만듭니다.
 README·.gitignore·라이선스는 **모두 체크 해제** 하세요 (이미 로컬에 커밋되어 있습니다).
 
-> 무료 계정에서 GitHub Pages를 쓰려면 저장소가 **Public** 이어야 합니다.
-> Private으로 두려면 GitHub Pro 이상이 필요합니다.
-
 ### 2. 푸시하기
 
 ```bash
 cd D:\Git\Study\implant-academy && git push -u origin main
 ```
 
-### 3. Pages 켜기
+### 3. 저장소를 Public으로 두기
+
+무료 계정에서 GitHub Pages를 쓰려면 저장소가 **Public** 이어야 합니다.
+Private으로 만들었다면 Settings 맨 아래 **Danger Zone → Change repository visibility →
+Change to public** 에서 전환합니다. Private을 유지하려면 GitHub Pro 이상이 필요합니다.
+
+저장소가 Private인지 확인하는 방법: 로그아웃 상태(시크릿 창)로 저장소 주소를 열었을 때
+`Page not found` 가 뜨면 Private입니다.
+
+### 4. Pages 켜기
 
 저장소 → **Settings** → **Pages** → Source를 `Deploy from a branch`,
 Branch를 `main` / `/ (root)` 로 지정하고 Save.
