@@ -27,8 +27,28 @@ const STAGE = { listen: 0, match: 1, choice: 2, ox: 3, blank: 4, wordbank: 5, sp
 const CORE = ['listen', 'wordbank'];
 const LESSON_SIZE = 6;
 
-// 유닛별 문장 길이 상한 (단어 수) — listen.audio / speak.text 에 적용 (DESIGN.md §3)
-const LEN_CAP = [8, 10, 11, 12, 12];
+// 레벨 밴드별 문장 길이 상한 (단어 수) — listen.audio / speak.text 에 적용 (DESIGN.md §3)
+const BAND_CAP = { 'a1-1': 7, 'a1-2': 9, 'a1-3': 11, 'a2-1': 12, 'a2-2': 13, 'a2-3': 14, 'b1-1': 16 };
+
+// ===== 문법 축 (DESIGN.md §3.5) =====
+// 각 구조가 "어느 밴드에서 도입되는가". 도입 밴드보다 앞선 유닛에서 그 구조가 쓰이면 오류다.
+// 이게 커리큘럼이 체계를 유지하는 유일한 기계 장치다.
+const GRAMMAR = [
+  { key: '현재진행형',   band: 'a1-3', re: /\b(am|is|are|'m|'re|'s)\s+\w+ing\b/ },
+  { key: '과거시제',     band: 'a2-1', re: /\b(was|were|did|didn't|went|had|saw|took|got|made|came|said|stayed|liked|wanted|worked|looked)\b/ },
+  { key: '미래 will',    band: 'a2-2', re: /\b(will|'ll|going to)\b/ },
+  { key: '의무 조동사',  band: 'a2-2', re: /\b(should|must|have to|has to)\b/ },
+  // 비교 표지가 있을 때만 잡는다. "tell me more"(수량)는 비교급 학습 대상이 아니다.
+  { key: '비교급·최상급', band: 'a2-3', re: /\bthan\b|\b(better|best|worse|worst)\b|\bthe (most|least) \w+/ },
+  { key: '현재완료',     band: 'b1-1', re: /\b(have|has|'ve)\s+(been|got|gone|seen|done|tried|eaten|made|had)\b/ },
+  // 지시대명사 that("that is my bag")과 구별: 관계절은 앞에 꾸밀 명사구가 있어야 한다
+  { key: '관계대명사',   band: 'b1-1', re: /\b\w+\s+(who|which)\s+\w+|\b(the|a|an|my|your|his|her|our|their)\s+\w+\s+that\s+\w+/i },
+];
+// 굳어진 표현은 문법 학습 대상이 아니므로 축 검사에서 제외한다
+const GRAMMAR_EXEMPT = [
+  /nice to meet you/i, /how are you/i, /thank you/i, /excuse me/i, /good morning/i,
+  /what time is it/i, /how much/i, /i'd like/i, /see you/i, /take care/i,
+];
 
 const normEn = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
 const wordsOf = (s) => String(s || '').trim().split(/\s+/).filter(Boolean);
@@ -77,6 +97,11 @@ export function validate(data) {
     stats.byTrack[tid] = 0;
     let oxTrue = 0, oxAll = 0;
 
+    const bandOrder = (data.bands || []).map(b => b.id);
+    const bandIdx = (b) => bandOrder.indexOf(b);
+    const seenSlugs = new Set();
+    let prevBandIdx = -1;
+
     units.forEach((u, ui) => {
       if (!u || !u.title || !Array.isArray(u.lessons)) {
         errors.push(`${tid} U${ui + 1}: 유닛 구조 오류`);
@@ -84,8 +109,27 @@ export function validate(data) {
       }
       stats.units++;
       const seenPrompts = new Map();
-      const cap = LEN_CAP[Math.min(ui, LEN_CAP.length - 1)];
+      const cap = BAND_CAP[u.band] || 16;
       let lenSum = 0, lenN = 0;
+
+      /* ---- 레벨 밴드·문법 축 메타 (DESIGN.md §3.5) ---- */
+      const utag = `${tid} U${ui + 1}(${u.title})`;
+      if (!u.slug) errors.push(`${utag}: slug 없음 — 진도 ID가 위치에 묶여 재배치에 취약해집니다`);
+      else if (seenSlugs.has(u.slug)) errors.push(`${utag}: slug 중복 "${u.slug}"`);
+      else seenSlugs.add(u.slug);
+      if (!u.band) errors.push(`${utag}: band 없음`);
+      else if (bandIdx(u.band) === -1) errors.push(`${utag}: 알 수 없는 band "${u.band}"`);
+      else {
+        if (bandIdx(u.band) < prevBandIdx) errors.push(`${utag}: 밴드 역행 — 유닛은 밴드 순서대로 배치되어야 합니다`);
+        prevBandIdx = Math.max(prevBandIdx, bandIdx(u.band));
+      }
+      if (!Array.isArray(u.grammar) || !u.grammar.length) warns.push(`${utag}: grammar(담당 문법) 없음`);
+      const lessonSlugs = new Set();
+      u.lessons.forEach(l => {
+        if (!l.slug) errors.push(`${utag}: 레슨 "${l.title}" slug 없음`);
+        else if (lessonSlugs.has(l.slug)) errors.push(`${utag}: 레슨 slug 중복 "${l.slug}"`);
+        else lessonSlugs.add(l.slug);
+      });
 
       u.lessons.forEach((l, li) => {
         if (!l || !l.title || !Array.isArray(l.questions)) {
@@ -116,6 +160,21 @@ export function validate(data) {
 
           if (!TYPES.includes(q.type)) { errors.push(`${tag}: 알 수 없는 유형`); return; }
           if (!q.explanation || !q.explanation.trim()) errors.push(`${tag}: explanation 비어 있음`);
+
+          /* ---- 문법 축: 아직 안 배운 구조를 쓰고 있지 않은지 ---- */
+          if (u.band && bandIdx(u.band) !== -1) {
+            let en = [q.audio, q.text, q.answer, ...(q.accept || []), ...(q.sequence || [])];
+            if (q.type === 'blank') en.push((q.prompt || '').replace('___', q.options[q.answerIndex] || ''));
+            if (q.type === 'choice') en.push(...((q.prompt || '').match(/"([^"]*[A-Za-z][^"]*)"/g) || []));
+            let probe = en.filter(Boolean).join(' ');
+            GRAMMAR_EXEMPT.forEach(re => { probe = probe.replace(re, ' '); });
+            GRAMMAR.forEach(g => {
+              if ((q.allow || []).includes(g.key)) return;
+              if (g.re.test(probe) && bandIdx(u.band) < bandIdx(g.band)) {
+                errors.push(`${tag}: ${u.band} 유닛인데 ${g.band}에서 배우는 "${g.key}"를 사용 — 아직 안 배운 문법입니다`);
+              }
+            });
+          }
 
           // prompt 는 listen/speak 을 뺀 모든 유형에 필요하다 (match 는 기본 문구로 대체 가능)
           const needsPrompt = !['listen', 'speak', 'match'].includes(q.type);
@@ -148,7 +207,7 @@ export function validate(data) {
               }
               const n = wordsOf(q.audio).length;
               lenSum += n; lenN++;
-              if (n > cap) errors.push(`${tag}: 문장이 ${n}단어 — U${ui + 1} 상한 ${cap}단어 초과`);
+              if (n > cap) errors.push(`${tag}: 문장이 ${n}단어 — ${u.band} 상한 ${cap}단어 초과`);
               // 보기끼리 소리 구분이 무의미하게 같은 경우
               if (Array.isArray(q.options) && new Set(q.options.map(normEn)).size !== q.options.length) {
                 errors.push(`${tag}: 보기들이 정규화하면 동일 — 듣기 변별 불가`);
@@ -225,7 +284,7 @@ export function validate(data) {
             else {
               const n = wordsOf(q.text).length;
               lenSum += n; lenN++;
-              if (n > cap) errors.push(`${tag}: 문장이 ${n}단어 — U${ui + 1} 상한 ${cap}단어 초과`);
+              if (n > cap) errors.push(`${tag}: 문장이 ${n}단어 — ${u.band} 상한 ${cap}단어 초과`);
               if (n > 12) warns.push(`${tag}: 문장이 길어 발음 채점이 불안정할 수 있음`);
             }
             if (!q.meaning) warns.push(`${tag}: meaning(뜻) 없음`);
@@ -254,6 +313,11 @@ if (isMain) {
   console.log(`트랙 ${stats.tracks}개(공개) / 유닛 ${stats.units}개 / 레슨 ${stats.lessons}개 / 문항 ${stats.questions}개`);
   console.log('유형 분포:', Object.entries(stats.byType).map(([k, v]) => `${k} ${v}`).join(', ') || '없음');
   console.log('유닛별 평균 문장 길이(듣기·말하기, 단어):', Object.entries(stats.avgLen).map(([k, v]) => `${k} ${v}`).join(', '));
+  (data.bands || []).forEach(b => {
+    const us = (data.tracks || []).flatMap(t => (t.units || [])).filter(u => u.band === b.id);
+    const qn = us.reduce((s2, u) => s2 + u.lessons.reduce((s3, l) => s3 + l.questions.length, 0), 0);
+    console.log(`  ${b.label} ${b.title} — 유닛 ${us.length}개 / 문항 ${qn}개${us.length ? '' : '  ⚠ 비어 있음'}`);
+  });
   const sealed = (data.tracks || []).filter(t => t.status !== 'live');
   if (sealed.length) console.log('준비 중 트랙:', sealed.map(t => `${t.title}(${t.id})`).join(', '));
   if (warns.length) console.log(`\n[경고 ${warns.length}건]\n` + warns.join('\n'));
