@@ -151,7 +151,20 @@
     margin:34px 16px 0; padding:0 2px 10px;
     border-bottom:2px solid var(--line);
   }
-  .band-head.dim{opacity:.5;}
+  .band-head.dim .band-tag, .band-head.dim .band-title{opacity:.55;}
+  .band-jump{
+    flex:none; border:0; cursor:pointer;
+    font-weight:900; font-size:12.5px; letter-spacing:.01em;
+    color:var(--accent-deep); background:var(--accent-soft);
+    border-radius:999px; padding:7px 13px;
+    transition:transform .06s ease;
+  }
+  .band-jump:active{transform:scale(.95);}
+  :root[data-theme="dark"] .band-jump{color:var(--ink);}
+  @media (prefers-color-scheme: dark){
+    .band-jump{color:var(--ink);}
+    :root[data-theme="light"] .band-jump{color:var(--accent-deep);}
+  }
   .band-tag{
     flex:none; font-size:12px; font-weight:900; letter-spacing:.06em;
     background:var(--ink); color:var(--ground); border-radius:8px; padding:5px 9px;
@@ -1058,7 +1071,11 @@ function renderHome(){
         html += '<div class="band-head'+(unitLocked?' dim':'')+'">'
           + '<span class="band-tag">'+esc(b.label)+'</span>'
           + '<span class="band-title">'+esc(b.title)+'<small>'+esc(b.desc||'')+'</small></span>'
-          + '<span class="band-prog">'+bandDone+'/'+bandAll+'</span></div>';
+          // 잠긴 밴드는 월반 시험으로 바로 시작할 수 있다 (DESIGN.md §6.7)
+          + (unitLocked
+              ? '<button class="band-jump" data-band="'+esc(b.id)+'">여기부터 시작</button>'
+              : '<span class="band-prog">'+bandDone+'/'+bandAll+'</span>')
+          + '</div>';
       }
     }
     html += '<div class="unit-banner'+(unitLocked?' locked-banner':'')+'">'
@@ -1106,6 +1123,8 @@ function renderHome(){
   });
   const wbtn = $('#btn-wrongs');
   if(wbtn) wbtn.addEventListener('click', startWrongsSession);
+  document.querySelectorAll('.band-jump').forEach(btn =>
+    btn.addEventListener('click', ()=>openJumpModal(btn.dataset.band)));
 }
 
 /* ================= 프로필 모달 ================= */
@@ -1206,6 +1225,59 @@ function startLesson(gi, review){
   renderHearts(); updatePbar();
   show('s-lesson');
   renderIntro();
+}
+
+/* ---- 월반: 잠긴 밴드로 건너뛰기 (DESIGN.md §6.7) ---- */
+// 대상 밴드보다 앞에 있으면서 아직 완료하지 않은 레슨들
+function jumpTargets(bandId){
+  const bi = BANDS.findIndex(b => b.id === bandId);
+  return LESSONS.filter(l => {
+    const ub = track.units[l.unit].band;
+    return BANDS.findIndex(b => b.id === ub) < bi && !me().done[l.id];
+  });
+}
+
+function openJumpModal(bandId){
+  const b = BANDS.find(x => x.id === bandId);
+  const skip = jumpTargets(bandId);
+  if(!b || !skip.length) return;
+  const veil = openModal(
+    '<h3>'+esc(b.label)+' · '+esc(b.title)+'부터 시작할까요?</h3>'
+    + '<p class="msub">앞의 레슨 <b>'+skip.length+'개</b>를 건너뜁니다. 통과 시험은 문항 10개, 하트 3개 — '
+    + '통과하면 건너뛴 레슨이 모두 완료 처리되고, 틀린 문항은 오답 노트에 남습니다. 실패해도 잃는 것은 없어요.</p>'
+    + '<div class="modal-actions">'
+    + '<button class="btn primary" id="btn-jump-go">시험 보고 건너뛰기</button>'
+    + '<button class="btn ghost" id="btn-jump-no">그냥 순서대로 할게요</button></div>'
+  );
+  veil.querySelector('#btn-jump-go').addEventListener('click', ()=>{ closeModal(); startJumpSession(bandId); });
+  veil.querySelector('#btn-jump-no').addEventListener('click', closeModal);
+}
+
+function startJumpSession(bandId){
+  const b = BANDS.find(x => x.id === bandId);
+  const skip = jumpTargets(bandId);
+  if(!b || !skip.length) return;
+  // 레슨당 1문항씩 무작위 표집해 10문항. speak(음성 인식)와 TTS 없는 환경의 listen은 제외.
+  const pick = shuffle(skip).map(l => {
+    const elig = l.questions
+      .map((q, qi) => ({ q, qid: l.id + 'q' + qi }))
+      .filter(x => x.q.type !== 'speak' && (x.q.type !== 'listen' || TTS));
+    return elig.length ? shuffle(elig)[0] : null;
+  }).filter(Boolean).slice(0, 10);
+  if(!pick.length) return;
+  S = {
+    gi: -1, lesson: { id: 'jump', title: b.label + ' 통과 시험' },
+    review: true, jumpMode: true, jumpBand: bandId,
+    jumpLessons: skip.map(l => l.id),
+    queue: pick.map(x => ({ q: x.q, qid: x.qid, first: true })),
+    total: pick.length, skipped: 0, cleared: 0,
+    firstCorrect: 0, solved: 0, xp: 0,
+    hearts: 3, cur: null, sel: null, built: [], matchState: null, locked: false,
+    speakScores: [], intro: false,
+  };
+  renderHearts(); updatePbar();
+  show('s-lesson');
+  nextQuestion();
 }
 
 /* ---- 오답 노트 세션: 틀렸던 문항만 모아 다시 푼다 ---- */
@@ -1661,8 +1733,10 @@ function finishLesson(success){
       u.lastDay = t;
     }
     u.xp = (u.xp||0) + earned;
-    if(!S.wrongsMode){
-      // 오답 노트 세션은 레슨 완료 기록·별점을 남기지 않는다
+    if(S.jumpMode){
+      // 월반 통과: 건너뛴 레슨을 완료 처리 (별 0개 = 시험으로 통과했다는 표시, 복습으로 올릴 수 있음)
+      S.jumpLessons.forEach(id => { if(!u.done[id]) u.done[id] = { stars: 0, best: 0 }; });
+    } else if(!S.wrongsMode){
       const prev = u.done[S.lesson.id];
       u.done[S.lesson.id] = {
         stars: Math.max(prev ? prev.stars : 0, stars),
@@ -1671,15 +1745,18 @@ function finishLesson(success){
     }
     saveStore();
     play('win');
-    const title = S.wrongsMode ? '오답 정리 완료!' : (S.review ? '복습 완료!' : '레슨 완료!');
-    const sub = S.wrongsMode
+    const jb = S.jumpMode ? BANDS.find(x => x.id === S.jumpBand) : null;
+    const title = S.jumpMode ? '월반 성공!' : S.wrongsMode ? '오답 정리 완료!' : (S.review ? '복습 완료!' : '레슨 완료!');
+    const sub = S.jumpMode
+      ? '레슨 '+S.jumpLessons.length+'개를 건너뛰고 '+esc(jb ? jb.label+' '+jb.title : '')+'부터 시작합니다'
+      : S.wrongsMode
       ? (S.cleared ? '문항 '+S.cleared+'개를 노트에서 지웠어요' : '아직 남은 문항은 다음에 다시 나와요')
       : esc(S.lesson.title) + (perfect ? ' · 완벽한 풀이!' : '') + (S.skipped ? ' · 건너뛴 문항 '+S.skipped+'개' : '');
     body =
       '<div class="result-emblem win">'+IC.crown+'</div>'
       + '<h2 class="result-title">'+title+'</h2>'
       + '<p class="result-sub">'+sub+'</p>'
-      + (S.wrongsMode ? '' : '<div class="result-stars">'+[1,2,3].map(k=>IC.star.replace('class="icon"','class="'+(k<=stars?'':'dim')+'"')).join('')+'</div>')
+      + (S.wrongsMode || S.jumpMode ? '' : '<div class="result-stars">'+[1,2,3].map(k=>IC.star.replace('class="icon"','class="'+(k<=stars?'':'dim')+'"')).join('')+'</div>')
       + '<div class="result-stats">'
       + '<div class="rstat v-xp"><div class="lab">획득 XP</div><div class="val">'+IC.bolt+'+'+earned+'</div></div>'
       + '<div class="rstat v-acc"><div class="lab">'+(spk === null ? '정답률' : '발음')+'</div><div class="val">'+IC.target+(spk === null ? acc : spk)+'%</div></div>'
@@ -1689,21 +1766,22 @@ function finishLesson(success){
   } else {
     body =
       '<div class="result-emblem lose">'+IC.heart+'</div>'
-      + '<h2 class="result-title">하트를 모두 사용했어요</h2>'
-      + '<p class="result-sub">괜찮아요. 다시 도전하면 더 잘할 수 있을 거예요!</p>'
+      + '<h2 class="result-title">'+(S.jumpMode ? '이번엔 아쉽게 미달이에요' : '하트를 모두 사용했어요')+'</h2>'
+      + '<p class="result-sub">'+(S.jumpMode ? '잃은 건 없어요. 다시 도전하거나, 지금 위치에서 이어가도 충분히 빨라요.' : '괜찮아요. 다시 도전하면 더 잘할 수 있을 거예요!')+'</p>'
       + '<div class="result-actions">'
       + '<button class="btn primary" id="btn-retry">다시 도전</button>'
       + '<button class="btn ghost" id="btn-go-home">홈으로</button></div>';
   }
   $('#result-body').innerHTML = body;
-  const gi = S.gi, review = S.review, wrongsMode = S.wrongsMode;
+  const gi = S.gi, review = S.review, wrongsMode = S.wrongsMode, jumpMode = S.jumpMode, jumpBand = S.jumpBand;
   S = null;
   show('s-result');
   if(success) burstConfetti();
   const homeBtn = $('#btn-go-home');
   if(homeBtn) homeBtn.addEventListener('click', ()=>{ renderHome(); show('s-home'); });
   const retryBtn = $('#btn-retry');
-  if(retryBtn) retryBtn.addEventListener('click', ()=> wrongsMode ? startWrongsSession() : startLesson(gi, review));
+  if(retryBtn) retryBtn.addEventListener('click', ()=>
+    jumpMode ? startJumpSession(jumpBand) : wrongsMode ? startWrongsSession() : startLesson(gi, review));
 }
 
 /* ================= 컨페티 ================= */
