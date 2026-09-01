@@ -20,6 +20,13 @@ export function loadData(file) {
 
 const TYPES = ['choice', 'ox', 'blank', 'match', 'order', 'listen', 'wordbank', 'speak'];
 
+// ===== 트랙 종류 (DESIGN.md §9) =====
+// language: 영어처럼 언어를 배우는 트랙 — 듣기·문장 조립 필수, 단계 순서, 문법 축, 길이 상한
+// knowledge: 임플란트처럼 지식을 배우는 트랙 — 4지선다 최대 3개, 같은 유형 연속 금지,
+//            용어 짝(match)은 맨 앞, 절차(order)는 맨 뒤. 음성·문법 규칙은 적용하지 않는다.
+const KNOWLEDGE_TYPES = ['choice', 'ox', 'blank', 'match', 'order'];
+const KNOWLEDGE_MAX = { choice: 3 };   // 그 외 유형은 레슨당 1개
+
 // 레슨 템플릿: 입력 → 인식·판단 → 문형 → 조립 → 산출 → 담화 (DESIGN.md §2)
 const STAGE = { listen: 0, match: 1, choice: 2, ox: 3, blank: 4, wordbank: 5, speak: 6, order: 7 };
 // 레슨마다 정확히 1개씩. speak는 선택 유형 — 음성 인식 의존을 늘리지 않는 정책에 따라
@@ -97,7 +104,8 @@ export function validate(data) {
     stats.byTrack[tid] = 0;
     let oxTrue = 0, oxAll = 0;
 
-    const bandOrder = (data.bands || []).map(b => b.id);
+    const kind = t.kind || 'language';
+    const bandOrder = (t.bands || data.bands || []).map(b => b.id);
     const bandIdx = (b) => bandOrder.indexOf(b);
     const seenSlugs = new Set();
     let prevBandIdx = -1;
@@ -109,7 +117,7 @@ export function validate(data) {
       }
       stats.units++;
       const seenPrompts = new Map();
-      const cap = BAND_CAP[u.band] || 16;
+      const cap = kind === 'language' ? (BAND_CAP[u.band] || 16) : Infinity;
       let lenSum = 0, lenN = 0;
 
       /* ---- 레벨 밴드·문법 축 메타 (DESIGN.md §3.5) ---- */
@@ -123,7 +131,7 @@ export function validate(data) {
         if (bandIdx(u.band) < prevBandIdx) errors.push(`${utag}: 밴드 역행 — 유닛은 밴드 순서대로 배치되어야 합니다`);
         prevBandIdx = Math.max(prevBandIdx, bandIdx(u.band));
       }
-      if (!Array.isArray(u.grammar) || !u.grammar.length) warns.push(`${utag}: grammar(담당 문법) 없음`);
+      if (kind === 'language' && (!Array.isArray(u.grammar) || !u.grammar.length)) warns.push(`${utag}: grammar(담당 문법) 없음`);
       const lessonSlugs = new Set();
       u.lessons.forEach(l => {
         if (!l.slug) errors.push(`${utag}: 레슨 "${l.title}" slug 없음`);
@@ -139,16 +147,31 @@ export function validate(data) {
         stats.lessons++;
         const ltag = `${tid} U${ui + 1}-L${li + 1}`;
 
-        /* ---- 레슨 구성 규칙 ---- */
+        /* ---- 레슨 구성 규칙 (트랙 종류별) ---- */
         const typesInLesson = l.questions.map(x => x.type);
         if (l.questions.length !== LESSON_SIZE) errors.push(`${ltag}: 문항 ${l.questions.length}개 — 레슨은 ${LESSON_SIZE}문항`);
-        if (new Set(typesInLesson).size !== typesInLesson.length) errors.push(`${ltag}: 같은 유형이 두 번 — 레슨 내 유형은 모두 달라야 함`);
-        CORE.forEach(c => { if (!typesInLesson.includes(c)) errors.push(`${ltag}: 필수 유형 ${c} 없음`); });
-        for (let i = 1; i < typesInLesson.length; i++) {
-          const a = STAGE[typesInLesson[i - 1]], b = STAGE[typesInLesson[i]];
-          if (a !== undefined && b !== undefined && a > b) {
-            errors.push(`${ltag}: 문항 순서 위반 — ${typesInLesson[i - 1]} 뒤에 ${typesInLesson[i]} (입력→인식→조립→산출 순서)`);
-            break;
+        if (kind === 'knowledge') {
+          const cnt = {};
+          typesInLesson.forEach(x => { cnt[x] = (cnt[x] || 0) + 1; });
+          Object.entries(cnt).forEach(([x, n]) => {
+            if (!KNOWLEDGE_TYPES.includes(x)) errors.push(`${ltag}: 지식 트랙에 쓸 수 없는 유형 ${x}`);
+            else if (n > (KNOWLEDGE_MAX[x] || 1)) errors.push(`${ltag}: ${x} ${n}개 — 최대 ${KNOWLEDGE_MAX[x] || 1}개`);
+          });
+          for (let i = 1; i < typesInLesson.length; i++) {
+            if (typesInLesson[i] === typesInLesson[i - 1]) { errors.push(`${ltag}: 같은 유형(${typesInLesson[i]})이 연달아 나옴`); break; }
+          }
+          const mi = typesInLesson.indexOf('match'), oi = typesInLesson.indexOf('order');
+          if (mi > 0) errors.push(`${ltag}: 용어 짝(match)은 레슨 맨 앞이어야 함`);
+          if (oi !== -1 && oi !== typesInLesson.length - 1) errors.push(`${ltag}: 절차 배열(order)은 레슨 맨 뒤여야 함`);
+        } else {
+          if (new Set(typesInLesson).size !== typesInLesson.length) errors.push(`${ltag}: 같은 유형이 두 번 — 레슨 내 유형은 모두 달라야 함`);
+          CORE.forEach(c => { if (!typesInLesson.includes(c)) errors.push(`${ltag}: 필수 유형 ${c} 없음`); });
+          for (let i = 1; i < typesInLesson.length; i++) {
+            const a = STAGE[typesInLesson[i - 1]], b = STAGE[typesInLesson[i]];
+            if (a !== undefined && b !== undefined && a > b) {
+              errors.push(`${ltag}: 문항 순서 위반 — ${typesInLesson[i - 1]} 뒤에 ${typesInLesson[i]} (입력→인식→조립→산출 순서)`);
+              break;
+            }
           }
         }
 
@@ -161,8 +184,8 @@ export function validate(data) {
           if (!TYPES.includes(q.type)) { errors.push(`${tag}: 알 수 없는 유형`); return; }
           if (!q.explanation || !q.explanation.trim()) errors.push(`${tag}: explanation 비어 있음`);
 
-          /* ---- 문법 축: 아직 안 배운 구조를 쓰고 있지 않은지 ---- */
-          if (u.band && bandIdx(u.band) !== -1) {
+          /* ---- 문법 축: 아직 안 배운 구조를 쓰고 있지 않은지 (언어 트랙만) ---- */
+          if (kind === 'language' && u.band && bandIdx(u.band) !== -1) {
             let en = [q.audio, q.text, q.answer, ...(q.accept || []), ...(q.sequence || [])];
             if (q.type === 'blank') en.push((q.prompt || '').replace('___', q.options[q.answerIndex] || ''));
             if (q.type === 'choice') en.push(...((q.prompt || '').match(/"([^"]*[A-Za-z][^"]*)"/g) || []));
@@ -219,7 +242,7 @@ export function validate(data) {
             const n = ((q.prompt || '').match(/___/g) || []).length;
             if (n === 0) errors.push(`${tag}: prompt에 "___" 없음`);
             if (n > 1) warns.push(`${tag}: "___"가 ${n}개 — 첫 번째만 빈칸으로 렌더링됨`);
-            if (!q.hint) warns.push(`${tag}: hint(뜻) 없음 — 학습자가 문맥을 잡기 어렵습니다`);
+            if (kind === 'language' && !q.hint) warns.push(`${tag}: hint(뜻) 없음 — 학습자가 문맥을 잡기 어렵습니다`);
           }
 
           if (q.type === 'ox') {
@@ -235,7 +258,7 @@ export function validate(data) {
               const L = q.pairs.map(p => p[0]), R = q.pairs.map(p => p[1]);
               if (new Set(L).size !== 4) errors.push(`${tag}: 왼쪽 항목 중복 — 채점 불가`);
               if (new Set(R).size !== 4) errors.push(`${tag}: 오른쪽 항목 중복 — 채점 불가`);
-              if (!L.every(v => /[a-z]/i.test(v))) warns.push(`${tag}: 왼쪽 열은 학습 언어(영어)여야 합니다`);
+              if (kind === 'language' && !L.every(v => /[a-z]/i.test(v))) warns.push(`${tag}: 왼쪽 열은 학습 언어(영어)여야 합니다`);
               [...L, ...R].forEach(v => {
                 if (!v || !v.trim()) errors.push(`${tag}: 빈 항목`);
                 else if (v.length > 16) warns.push(`${tag}: 항목이 김(${v.length}자) — "${v}"`);
@@ -313,10 +336,13 @@ if (isMain) {
   console.log(`트랙 ${stats.tracks}개(공개) / 유닛 ${stats.units}개 / 레슨 ${stats.lessons}개 / 문항 ${stats.questions}개`);
   console.log('유형 분포:', Object.entries(stats.byType).map(([k, v]) => `${k} ${v}`).join(', ') || '없음');
   console.log('유닛별 평균 문장 길이(듣기·말하기, 단어):', Object.entries(stats.avgLen).map(([k, v]) => `${k} ${v}`).join(', '));
-  (data.bands || []).forEach(b => {
-    const us = (data.tracks || []).flatMap(t => (t.units || [])).filter(u => u.band === b.id);
-    const qn = us.reduce((s2, u) => s2 + u.lessons.reduce((s3, l) => s3 + l.questions.length, 0), 0);
-    console.log(`  ${b.label} ${b.title} — 유닛 ${us.length}개 / 문항 ${qn}개${us.length ? '' : '  ⚠ 비어 있음'}`);
+  (data.tracks || []).filter(t => t.status === 'live').forEach(t => {
+    console.log(`[${t.title} · ${t.kind || 'language'}]`);
+    (t.bands || data.bands || []).forEach(b => {
+      const us = (t.units || []).filter(u => u.band === b.id);
+      const qn = us.reduce((s2, u) => s2 + u.lessons.reduce((s3, l) => s3 + l.questions.length, 0), 0);
+      console.log(`  ${b.label} ${b.title} — 유닛 ${us.length}개 / 문항 ${qn}개${us.length ? '' : '  ⚠ 비어 있음'}`);
+    });
   });
   const sealed = (data.tracks || []).filter(t => t.status !== 'live');
   if (sealed.length) console.log('준비 중 트랙:', sealed.map(t => `${t.title}(${t.id})`).join(', '));

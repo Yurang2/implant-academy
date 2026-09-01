@@ -9,6 +9,7 @@ import { loadData, validate } from './check.mjs';
 const dir = path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1'));
 const fragPath = path.join(dir, 'app.html');
 let frag = fs.readFileSync(fragPath, 'utf8');
+let appTitle = '아카데미';
 
 const dataArg = process.argv[2] || path.join(dir, 'data.json');
 if (!fs.existsSync(dataArg)) {
@@ -18,6 +19,7 @@ if (!fs.existsSync(dataArg)) {
 }
 {
   const data = loadData(dataArg);
+  appTitle = (data.app && data.app.title) || appTitle;
   const { errors, warns, stats } = validate(data);
 
   if (warns.length) console.warn(`경고 ${warns.length}건 (node check.mjs 로 상세 확인)`);
@@ -43,7 +45,7 @@ const wrapper = `<!doctype html>
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<title>링고 아카데미</title>
+<title>${appTitle}</title>
 ${frag}
 </html>
 `;
