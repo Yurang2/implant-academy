@@ -31,20 +31,19 @@ node build.mjs      # 주입 + index.html 생성
 
 ## 투트랙 구조
 
-`data.json`은 **트랙 배열**입니다. 엔진(문항 유형·XP·하트·스트릭·경로 UI)은 전부 공용이고, 트랙은 콘텐츠만 갈아 끼웁니다.
+`data.json`은 **트랙 배열**입니다. 엔진(문항 유형·XP·하트·스트릭·오답 노트·월반·동기화·경로 UI)은
+전부 공용이고, 트랙은 콘텐츠와 규칙 묶음(`kind`)만 갈아 끼웁니다.
 
 ```json
-{ "schema": 2, "tracks": [
-  { "id": "english", "title": "생활 영어", "lang": "en-US", "status": "live",   "units": [...] },
-  { "id": "track-b", "title": "전문 트랙",  "lang": "ko-KR", "status": "sealed", "units": []    }
+{ "schema": 3, "app": { "title": "임플란트 아카데미" }, "tracks": [
+  { "id": "implant", "kind": "knowledge", "speech": false, "bands": [...5단계...], "units": [...] },
+  { "id": "english", "kind": "language",  "bands": [...A1.1~B1.1...], "units": [...] }
 ]}
 ```
 
-- `status: "live"` 이고 `units`가 있는 트랙만 앱에 나타납니다.
-- live 트랙이 2개 이상이면 상단에 **트랙 전환 칩**이 자동으로 켜지고, 진도는 트랙별로 따로 저장됩니다(레슨 id가 `트랙id:u1l1` 형태).
-- live가 아닌 트랙은 홈 맨 아래에 잠금 카드로만 표시됩니다.
-
-두 번째 트랙을 붙이는 순서는 [vault/README.md](vault/README.md)에 적어 두었습니다. 요약하면 **영어 트랙 레벨 디자인 확정 → 그 규칙으로 2번 트랙 문항 재단 → `status`를 `live`로**. 반대로 하면 문항을 두 번 고치게 됩니다.
+- `tracks[0]`이 기본 트랙, 앱 이름은 `app.title`. live 트랙이 2개 이상이면 상단에 **트랙 전환 칩**이 켜집니다.
+- `kind: "knowledge"`는 용어 짝→4지선다·OX·빈칸→절차 배열 템플릿, `kind: "language"`는 듣기→…→문장 조립 템플릿과 문법 축을 씁니다 ([DESIGN.md §9](DESIGN.md)).
+- 진도·오답 ID는 이름 기반(`implant:basics/a`)이라 유닛을 재배치해도 기록이 어긋나지 않습니다.
 
 ## 커리큘럼 (임플란트 — 기본 트랙)
 
@@ -72,8 +71,7 @@ node build.mjs      # 주입 + index.html 생성
 
 ## 문항 유형
 
-듣기·말하기 3종이 이 앱의 중심입니다. 레슨은 6문항 고정이고
-**듣기 → 인식 → 조립 → 말하기** 순서를 따릅니다 — 자세한 규칙은 [DESIGN.md](DESIGN.md).
+레슨은 6문항 고정입니다. 영어 트랙은 **듣기 → 인식 → 조립 → 말하기**, 임플란트 트랙은 **용어 짝 → 개념·판단 → 절차** 순서를 따릅니다 — 자세한 규칙은 [DESIGN.md](DESIGN.md).
 
 | 유형 | 하는 일 | 필수 필드 |
 |---|---|---|
