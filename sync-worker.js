@@ -30,7 +30,8 @@ export default {
 
     if (req.method === 'PUT') {
       const body = await req.text();
-      if (body.length > 64 * 1024) return new Response('too large', { status: 413, headers: CORS });
+      // 학습 로그(최근 6000건)와 서술 답안이 함께 실리므로 넉넉히 2MB까지 받는다 (KV 값 한도는 25MB)
+      if (body.length > 2 * 1024 * 1024) return new Response('too large', { status: 413, headers: CORS });
       try { JSON.parse(body); } catch (e) { return new Response('bad json', { status: 400, headers: CORS }); }
       await env.SYNC_KV.put(key, body);
       return new Response('{"ok":true}', { headers: { ...CORS, 'Content-Type': 'application/json' } });
