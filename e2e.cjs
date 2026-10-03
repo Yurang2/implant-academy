@@ -5,13 +5,20 @@ const SP = require('os').tmpdir();
 const URL = 'file://' + require('path').join(__dirname, 'index.html');
 
 (async () => {
-  const browser = await chromium.launch();
+  const browser = await chromium.launch({ args: ['--mute-audio'] });
   const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, acceptDownloads: true });
+  // 테스트 중 TTS가 실제 스피커로 나오지 않게: 말하기는 소리 없이 바로 끝난 것으로 처리
+  await ctx.addInitScript(() => {
+    if (window.speechSynthesis) window.speechSynthesis.speak = u => setTimeout(() => u.onend && u.onend(), 0);
+  });
   const page = await ctx.newPage();
   const errors = [];
   page.on('pageerror', e => errors.push(String(e)));
   page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
   const assert = (c, msg) => { if (!c) { throw new Error('ASSERT: ' + msg); } console.log('  ✓ ' + msg); };
+  // 레벨업 오버레이는 결과 화면 1.1초 뒤에 떠서 화면을 옮겨도 남는다 → 어느 클릭이든 가리면 먼저 닫기
+  let lvups = 0;
+  await page.addLocatorHandler(page.locator('.lvup'), async () => { lvups++; await page.click('#btn-lvup'); });
 
   await page.goto(URL);
   await page.fill('#name-input', '홍길동');
@@ -190,6 +197,7 @@ const URL = 'file://' + require('path').join(__dirname, 'index.html');
   assert(await page.evaluate(() => S.hearts) === 3 && await page.locator('#hearts').isVisible(), '월반 시험만 하트 3개');
   assert(await page.evaluate(() => S.queue.every(x => x.q.type !== 'explain')), '월반 시험에 서술형 없음');
 
+  assert(lvups >= 1, `레벨업 오버레이 노출 후 닫힘 (${lvups}회)`);
   assert(errors.length === 0, '콘솔 오류 없음 ' + errors.join(' | '));
   await browser.close();
   console.log('ALL PASSED');
