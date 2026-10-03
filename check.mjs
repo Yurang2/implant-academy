@@ -204,6 +204,8 @@ export function validate(data) {
 
           if (!TYPES.includes(q.type)) { errors.push(`${tag}: 알 수 없는 유형`); return; }
           if (!q.explanation || !q.explanation.trim()) errors.push(`${tag}: explanation 비어 있음`);
+          // 보기는 렌더마다 섞이므로 해설이 보기 번호(2번·②)를 가리키면 화면 번호와 어긋난다 — 내용으로 가리킬 것
+          if (/[1-4]\s*번|[①②③④]/.test(q.explanation || '')) errors.push(`${tag}: explanation이 보기 번호를 가리킴 (보기가 섞이므로 내용으로 가리킬 것)`);
 
           /* ---- 문법 축: 아직 안 배운 구조를 쓰고 있지 않은지 (언어 트랙만) ---- */
           if (kind === 'language' && u.band && bandIdx(u.band) !== -1) {
